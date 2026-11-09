@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>충남대 AI 에이전트 특강</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0a0a;--text:#3f3f46;--sub:#71717a;--line:#e4e4e7;--soft:#fafafa;--acc:#2563eb;--bg:#ffffff}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--ink:#fafafa;--text:#d4d4d8;--sub:#a1a1aa;--line:#2a2a2e;--soft:#18181b;--acc:#60a5fa;--bg:#0f0f11} }
+:root[data-theme="dark"]{--ink:#fafafa;--text:#d4d4d8;--sub:#a1a1aa;--line:#2a2a2e;--soft:#18181b;--acc:#60a5fa;--bg:#0f0f11}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;font-size:16px}
+body{font-family:"Pretendard Variable",Pretendard,"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;color:var(--text);background:var(--bg);max-width:46rem;margin:0 auto;padding:48px max(24px, env(safe-area-inset-right)) 96px max(24px, env(safe-area-inset-left));font-size:1rem;word-break:keep-all}
+a{color:var(--acc);text-decoration:none;font-weight:600}
+b,strong{color:var(--ink);font-weight:650}
+.doc-meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--sub);font-weight:500}
+h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.035em;font-weight:750;color:var(--ink);margin:1.6rem 0 1rem}
+.lead{font-size:1rem;color:var(--text);margin:.2rem 0 1.4rem}
+.when{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:.92rem;color:var(--ink);font-weight:600;border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:.8rem 1.1rem}
+.when p{margin:0}
+.when span{display:inline-block;font-size:.72rem;font-weight:700;color:#fff;background:var(--ink);border-radius:6px;padding:.08rem .5rem;margin-right:.5rem;vertical-align:1px}
+:root[data-theme="dark"] .when span{color:#0a0a0a}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .when span{color:#0a0a0a} }
+h2{display:flex;align-items:baseline;gap:.7rem;font-size:1.4rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);padding-bottom:.7rem;margin:2.6rem 0 1rem;border-bottom:1px solid var(--line);scroll-margin-top:4rem}
+h2 .no{font-size:.85rem;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums}
+h2 .no::before{content:"0"}
+.note{font-size:.88rem;color:var(--sub);margin:.6rem 0 0}
+.list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.list a{display:flex;align-items:center;gap:1rem;padding:1rem 1.15rem;color:var(--ink);text-decoration:none;border-top:1px solid var(--line);background:var(--bg)}
+.list a:first-child{border-top:0}
+.list a:hover{background:var(--soft)}
+.list .k{flex:none;width:5.6rem;font-size:.78rem;font-weight:700;color:var(--acc)}
+.list .t{flex:1;min-width:0}
+.list b{display:block;font-size:1.06rem;font-weight:700;line-height:1.35}
+.list small{display:block;font-size:.85rem;color:var(--sub);font-weight:500;line-height:1.5;margin-top:.1rem}
+.list .go{flex:none;color:var(--sub);font-size:1.1rem}
+.list a.main b{font-size:1.15rem}
+.list a.pending{cursor:default}
+.list a.pending .k{color:var(--sub)}
+.list a.pending:hover{background:var(--bg)}
+.code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:1rem;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:.05rem .45rem;letter-spacing:.08em}
+@media (max-width:520px){.list a{flex-wrap:wrap;gap:.2rem .8rem}.list .k{width:100%}.list .go{display:none}}
+footer{margin-top:3.2rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.78rem;color:var(--sub);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="doc-meta"><span>충남대학교 산림자원학과 · AI 에이전트 특강</span><span>1일차 자료</span></div>
+<h1>AI 에이전트,<br>산림에서 오늘 시작합니다</h1>
+<p class="lead">1일차 수업에 쓰는 자료를 모두 모았습니다. 수업이 끝나도 그대로 있으니, 집에서 혼자 다시 따라 할 때도 이 페이지 하나면 됩니다.</p>
+<div class="when"><p><span>일시</span>2026. 11. 10.(화)</p><p><span>준비물</span>노트북 · 충전기 · 구글 계정</p><p><span>다음 시간</span>2026. 11. 17.(화) · 2일차 GeoAI</p></div>
+
+<h2><span class="no">1</span>수업 전에</h2>
+<p class="note" style="margin:0 0 .8rem">강의실에서 설치와 로그인에 시간을 쓰지 않도록, 아래 두 가지는 집에서 미리 끝내고 와 주세요.</p>
+<div class="list">
+  <a class="main" href="lab1/#x1"><span class="k">사전 준비</span><span class="t"><b>미리 해 오세요 — Antigravity 설치 · 구글 계정 · 실습 자료 풀기</b><small>약 10분 · 클로드 앱이나 ChatGPT(Codex) 앱을 쓰는 분은 가이드에서 내 앱을 고르면 그 앱 기준으로 보입니다</small></span><span class="go">→</span></a>
+  <a href="https://www.menti.com" target="_blank" rel="noopener"><span class="k">사전 설문</span><span class="t"><b>menti.com · 코드 <span class="code">2185 6308</span></b><small>휴대폰으로 2분 · AI 사용 빈도 · 에이전트 경험 · QGIS 역량 · 해 보고 싶은 것 — 결과는 이론 2 에서 함께 봅니다</small></span><span class="go">↗</span></a>
+</div>
+
+<h2><span class="no">2</span>수업 시간에</h2>
+<p class="note" style="margin:0 0 .8rem">노트북 화면을 반으로 나눠 왼쪽에 에이전트 앱, 오른쪽에 실습 가이드를 띄웁니다.</p>
+<div class="list">
+  <a href="https://claude.ai/artifact/RYsYvMiJ5e9UrwB1LR43tw" target="_blank" rel="noopener"><span class="k">이론 1</span><span class="t"><b>환경공간정보 이해와 활용</b><small>GIS 의 개념 · 좌표체계 · 벡터와 래스터 · 국가 환경공간정보 · 공간분석과 지자체 사례 · 지도 디자인 · GIS 소프트웨어와 GeoAI</small></span><span class="go">→</span></a>
+  <a href="https://claude.ai/artifact/EU846H1b931jR8V6yvF1jz" target="_blank" rel="noopener"><span class="k">이론 2</span><span class="t"><b>AI 에이전트와 바이브코딩</b><small>41장 — 에이전트가 무엇인지 · 어떻게 일하는지 · 맡겨 보기와 조건 걸기 · 산림 연구자를 위한 팁과 용어</small></span><span class="go">→</span></a>
+  <a href="https://claude.ai/artifact/6mv9zEnNQmqXK4KNLtp8BZ" target="_blank" rel="noopener"><span class="k">실습 슬라이드</span><span class="t"><b>실습 슬라이드 — 단계마다 한 장</b><small>26장 — 준비 · 실습 1 야장 취합 · 쉬어 가기 · 실습 2 수목학 퀴즈 · 실습 3 토지피복 산림 파편화 · 도전 과제</small></span><span class="go">→</span></a>
+  <a class="main" href="lab1/"><span class="k">실습 가이드</span><span class="t"><b>1일차 실습 가이드 — AI 에이전트에게 일 맡겨 보기</b><small>따라 할 문장이 모두 여기 있습니다 · 복사 단추로 붙여 넣기 · Antigravity · 클로드 · ChatGPT 가운데 내 앱 고르기</small></span><span class="go">→</span></a>
+</div>
+
+<h2><span class="no">3</span>실습 자료 · 결과 내기</h2>
+<p class="note" style="margin:0 0 .8rem">실습 자료는 수업 전에 받아 <b>C:\workspace</b> 에 풀어 둡니다. 도전 B 누적경관 자료(275MB)는 따로 받습니다.</p>
+<div class="list">
+  <a href="https://drive.google.com/file/d/1qV7JBGnd33Mb_d5f3bgJzhEm-aqeznFT/view?usp=sharing" target="_blank" rel="noopener"><span class="k">실습 자료</span><span class="t"><b>충남대_1일차_실습자료.zip</b><small>실습01 야장 엑셀 3개 + 양식 · 실습02 수종특징.csv · 실습03 토지피복 타일 12장 + 코드표 + 조사지점 · 따라할_문장.txt · 약 23MB · 풀어서 C:\workspace 로</small></span><span class="go">⤓</span></a>
+  <a href="https://drive.google.com/file/d/1sHO-Ru7XRSgQvOEF0n6F_PmJ2LIWWiz9/view?usp=sharing" target="_blank" rel="noopener" id="lnk-viewshed"><span class="k">도전 B 자료</span><span class="t"><b>누적경관 자료 (dem · 벌채구역 · 조망점)</b><small>275MB · 받아서 C:\workspace\실습04 폴더에 풉니다 — 실습04 를 새 책상으로</small></span><span class="go">⤓</span></a>
+  <a class="main" href="https://tally.so/r/ped2LJ" target="_blank" rel="noopener" id="lnk-submit"><span class="k">결과 내기</span><span class="t"><b>실습 결과 내기 폼</b><small>이름 · 이메일 · 쓴 AI 에이전트 · 도전 A 조사지점지도.html(파일 또는 공유 주소) · 도전 B 누적경관 결과보고서.pdf(파일 또는 공유 주소) · 자유과제 결과 · 막힌 부분과 하고 싶은 말 · 낸 것은 강사만 봅니다</small></span><span class="go">↗</span></a>
+</div>
+
+<footer><span>충남대학교 산림자원학과 특강 · 이상혁 · 한국환경연구원(KEI)</span><span>forestgeoai@gmail.com</span></footer>
+
+<script>
+// 주소가 정해지면 아래 두 칸에 넣으세요 — 비어 있으면 「주소는 수업 시간에 안내」로 보입니다
+var LINKS = { submit: "https://tally.so/r/ped2LJ", viewshed: "https://drive.google.com/file/d/1sHO-Ru7XRSgQvOEF0n6F_PmJ2LIWWiz9/view?usp=sharing" };
+[['lnk-submit', LINKS.submit], ['lnk-viewshed', LINKS.viewshed]].forEach(function(p){
+  var a = document.getElementById(p[0]); if(!a) return;
+  if(p[1]){ a.href = p[1]; a.target = '_blank'; a.rel = 'noopener'; a.classList.remove('pending'); var s = a.querySelector('small'); if(s) s.textContent = s.textContent.replace(' · 주소는 수업 시간에 안내',''); }
+});
+</script>
+</body>
+</html>

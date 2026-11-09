@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>1일차 실습 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0a0a;--text:#3f3f46;--sub:#71717a;--line:#e4e4e7;--soft:#fafafa;--acc:#2563eb;--bg:#ffffff;--pre:#0a0a0a;--pre-line:#27272a;--pre-ink:#fafafa;--ok-bg:#f0fdf4;--ok-line:#bbf7d0;--ok-ink:#14532d;--ok-h:#15803d;--no-bg:#fef2f2;--no-line:#fecaca;--no-ink:#7f1d1d;--no-h:#b91c1c;--code-bg:#f4f4f5}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--ink:#fafafa;--text:#d4d4d8;--sub:#a1a1aa;--line:#2a2a2e;--soft:#18181b;--acc:#60a5fa;--bg:#0f0f11;--pre:#18181b;--pre-line:#3f3f46;--pre-ink:#fafafa;--ok-bg:#0f2a19;--ok-line:#1f5a34;--ok-ink:#bbf7d0;--ok-h:#4ade80;--no-bg:#2d1313;--no-line:#6b2222;--no-ink:#fecaca;--no-h:#f87171;--code-bg:#1f1f23} }
+:root[data-theme="dark"]{--ink:#fafafa;--text:#d4d4d8;--sub:#a1a1aa;--line:#2a2a2e;--soft:#18181b;--acc:#60a5fa;--bg:#0f0f11;--pre:#18181b;--pre-line:#3f3f46;--pre-ink:#fafafa;--ok-bg:#0f2a19;--ok-line:#1f5a34;--ok-ink:#bbf7d0;--ok-h:#4ade80;--no-bg:#2d1313;--no-line:#6b2222;--no-ink:#fecaca;--no-h:#f87171;--code-bg:#1f1f23}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;font-size:16px;scroll-behavior:smooth}
+body{font-family:"Pretendard Variable",Pretendard,"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;color:var(--text);background:var(--bg);max-width:46rem;margin:0 auto;padding:48px max(24px, env(safe-area-inset-right)) 96px max(24px, env(safe-area-inset-left));font-size:1rem;word-break:keep-all}
+a{color:var(--acc);text-decoration:none;font-weight:600}
+b,strong{color:var(--ink);font-weight:650}
+p{margin:.6rem 0}
+.doc-meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--sub);font-weight:500}
+h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.035em;font-weight:750;color:var(--ink);margin:1.6rem 0 1rem}
+.hot{display:block;border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:.95rem 1.1rem;font-size:.95rem;color:var(--text)}
+.hot .big{display:block;font-weight:650;color:var(--ink);margin-bottom:.15rem}
+.other{font-size:.875rem;color:var(--sub);margin:1rem 0 1.4rem}
+.osbar{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:1rem 0 0;position:sticky;top:0;background:var(--bg);padding:.6rem 0;z-index:5;border-bottom:1px solid var(--line)}
+.oshint{font-size:.8rem;color:var(--sub);font-weight:600;margin-right:.2rem}
+.osbtn{font:inherit;font-size:.88rem;font-weight:650;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:.35rem .9rem;cursor:pointer}
+.osbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.app{display:none;border:1px solid var(--line);border-radius:12px;margin:.8rem 0 1rem;overflow:hidden}
+html[data-app="ag"] .app[data-app="ag"],html[data-app="cl"] .app[data-app="cl"],html[data-app="gp"] .app[data-app="gp"],html[data-app="all"] .app{display:block}
+.app>header{display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-bottom:1px solid var(--line);background:var(--soft);font-size:.9rem;font-weight:650;color:var(--ink)}
+.app>p,.app>ol,.app>ul{margin-left:1rem;margin-right:1rem}
+.app>ol,.app>ul{margin-left:2.3rem;font-size:.95rem}
+.app>ol li::marker{color:var(--sub);font-weight:600}
+.app>ol li{margin:.25rem 0}
+.app>:last-child{margin-bottom:.8rem}
+.app .check,.app .fail{margin:.6rem 1rem}
+.toc{margin:1.6rem 0 0;font-size:.9rem}
+.toc .tt{font-size:.75rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
+.toc ol{list-style:none;margin:0 0 .6rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.toc a{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--line);border-radius:8px;padding:.3rem .7rem;color:var(--text);font-weight:500}
+.toc a:hover{border-color:var(--ink);color:var(--ink)}
+.toc .n{font-size:.75rem;color:var(--sub);font-variant-numeric:tabular-nums}
+.toc .grp{display:flex;align-items:baseline;gap:.6rem;margin:.7rem 0 .35rem}
+.toc .grp .k{font-size:.72rem;font-weight:700;color:var(--acc)}
+.toc .grp a{border:0;padding:0;font-weight:700;color:var(--ink)}
+.sec{padding-top:3rem}
+h2{display:flex;align-items:baseline;gap:.7rem;font-size:1.4rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);padding-bottom:.7rem;margin-bottom:1rem;border-bottom:1px solid var(--line);scroll-margin-top:4rem}
+h2 .no{font-size:.85rem;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums}
+h3{display:flex;align-items:baseline;gap:.6rem;font-size:1.12rem;font-weight:700;color:var(--ink);margin:2rem 0 .7rem;scroll-margin-top:4rem}
+h3 .n{font-size:.78rem;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:6px;padding:.05rem .45rem}
+.lead{font-size:.95rem;color:var(--sub);margin:0 0 1rem}
+.lead b{color:var(--text)}
+.step{position:relative;padding:0 0 1.2rem 2.6rem}
+.step::before{content:"";position:absolute;left:.8rem;top:1.9rem;bottom:.2rem;width:1px;background:var(--line)}
+.step:last-of-type::before{display:none}
+.step-no{position:absolute;left:0;top:0;width:1.65rem;height:1.65rem;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:.8rem;font-weight:650;display:flex;align-items:center;justify-content:center}
+.step h4{font-size:1rem;font-weight:600;color:var(--ink);line-height:1.6;padding-top:.05rem}
+.step h4 b{font-weight:700}
+.step p{font-size:.92rem;color:var(--sub);margin:.25rem 0 0}
+.prompt{margin:.75rem 0;border-radius:10px;background:var(--pre);overflow:hidden}
+.prompt .bar{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.4rem .5rem .4rem .9rem;border-bottom:1px solid var(--pre-line);font-size:.75rem;color:#a1a1aa}
+.prompt .bar button{font:inherit;font-size:.78rem;font-weight:600;color:#fafafa;background:transparent;border:1px solid #3f3f46;border-radius:6px;padding:.2rem .7rem;cursor:pointer;white-space:nowrap}
+.prompt .bar button:hover{background:#27272a}
+.prompt .bar button.done{border-color:#22c55e;color:#4ade80}
+.prompt pre{font-family:inherit;font-size:.95rem;line-height:1.65;color:var(--pre-ink);padding:.85rem 1rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.prompt.cond .bar{color:#fdba74}
+.check,.fail{margin:.9rem 0;padding:.75rem 1rem;border-radius:10px;font-size:.9rem;border:1px solid}
+.check{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok-ink)}
+.fail{background:var(--no-bg);border-color:var(--no-line);color:var(--no-ink)}
+.check>b:first-child,.fail>b:first-child{display:block;font-size:.8rem;font-weight:650;margin-bottom:.1rem}
+.check>b:first-child{color:var(--ok-h)}.check>b:first-child::before{content:"✓  "}
+.fail>b:first-child{color:var(--no-h)}.fail>b:first-child::before{content:"!  "}
+.note{font-size:.88rem;color:var(--sub);border-left:2px solid var(--line);padding-left:.9rem;margin:.9rem 0}
+.tbl-wrap{border:1px solid var(--line);border-radius:12px;margin:.8rem 0 1.2rem;overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+table.tbl th{text-align:left;font-size:.75rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;background:var(--soft);padding:.55rem .9rem;border-bottom:1px solid var(--line)}
+table.tbl td{padding:.6rem .9rem;border-bottom:1px solid var(--line);vertical-align:top}
+table.tbl tr:last-child td{border-bottom:0}
+table.tbl td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em;background:var(--code-bg);border:1px solid var(--line);border-radius:5px;padding:.05rem .35rem;color:var(--ink);overflow-wrap:anywhere}
+.checklist{list-style:none;margin:.8rem 0;padding:0}
+.checklist li{border-bottom:1px solid var(--line);padding:.55rem 0;margin:0}
+.checklist label{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer}
+.checklist input{flex:none;width:1.15rem;height:1.15rem;margin-top:.3rem;accent-color:var(--ink)}
+.checklist input:checked+span{opacity:.5;text-decoration:line-through}
+.help{margin:1.4rem 0;font-size:.9rem;color:var(--sub);background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:.85rem 1rem}
+.legend{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.85rem;color:var(--sub);margin:.6rem 0 0}
+.legend i{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;margin-right:.3rem;vertical-align:-1px}
+footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.78rem;color:var(--sub);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:.5rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="doc-meta"><span>충남대학교 산림자원학과 · AI 에이전트 특강 1일차</span><span>2026. 11. 10. 수업</span></div>
+<h1>1일차 실습 가이드 — AI 에이전트에게 일 맡겨 보기</h1>
+<div class="hot"><span class="big">오늘 실습 세 개는 과제와 현장 조사 뒤에 시간을 가장 많이 먹는 일 — 야장 취합 · 수목학 암기 · 공간자료 처리에서 골랐습니다.</span>수업 시간에도, 끝나고 집에서 혼자 다시 따라 할 때도 이 가이드 하나면 됩니다. 문장은 직접 치지 말고 <b>복사</b> 단추로 복사해 붙여 넣으세요.</div>
+<p class="other">수업은 무료로 쓸 수 있는 <b>Antigravity</b> 로 진행합니다. 클로드나 ChatGPT 를 이미 쓰고 있다면 아래에서 내 앱을 고르세요 — 폴더 여는 법과 권한 설정만 다르고 문장은 같습니다. 자료 내려받기는 → <a href="../">특강 홈</a></p>
+
+<div class="osbar" role="group" aria-label="내 앱 고르기">
+  <span class="oshint">내가 쓰는 앱 →</span>
+  <button type="button" class="osbtn" data-app="ag" aria-pressed="true">Antigravity</button>
+  <button type="button" class="osbtn" data-app="cl" aria-pressed="false">클로드</button>
+  <button type="button" class="osbtn" data-app="gp" aria-pressed="false">ChatGPT (Codex)</button>
+  <button type="button" class="osbtn" data-app="all" aria-pressed="false">모두 보기</button>
+</div>
+
+<nav class="toc">
+  <p class="tt">차례</p>
+  <ol><li><a href="#x0">오늘 끝나면 남는 것</a></li><li><a href="#x1">이 가이드 보는 법</a></li><li><a href="#x30">결과 내기</a></li><li><a href="#x31">막히면</a></li></ol>
+  <p class="grp"><span class="k">준비</span><a href="#p-0">에이전트를 내 컴퓨터에 들이기</a></p>
+  <ol><li><a href="#s0_1"><span class="n">0-1</span>자료 풀고 앱 열기</a></li><li><a href="#s0_2"><span class="n">0-2</span>화면 세 군데</a></li><li><a href="#s0_3"><span class="n">0-3</span>폴더 — 에이전트의 책상</a></li><li><a href="#s0_4"><span class="n">0-4</span>권한 — 물어볼지, 알아서 할지</a></li><li><a href="#s0_5"><span class="n">0-5</span>모델 — 누구에게 맡길지</a></li><li><a href="#s0_6"><span class="n">0-6</span>인사하기</a></li></ol>
+  <p class="grp"><span class="k">실습 1</span><a href="#p-1">흩어진 매목조사 야장을 양식 하나로</a></p>
+  <ol><li><a href="#s1_1"><span class="n">1-1</span>자료 확인</a></li><li><a href="#s1_2"><span class="n">1-2</span>내가 먼저 열어 보기</a></li><li><a href="#s1_3"><span class="n">1-3</span>취합 맡기기</a></li><li><a href="#s1_4"><span class="n">1-4</span>결과 열어 보기 · 조건 걸기</a></li></ol>
+  <p class="grp"><a href="#x14">쉬어 가기 — 얼마나 썼지?</a></p>
+  <p class="grp"><span class="k">실습 2</span><a href="#p-2">수목학 퀴즈 게임 만들기</a></p>
+  <ol><li><a href="#s2_1"><span class="n">2-1</span>새 책상 — <code>실습02</code></a></li><li><a href="#s2_2"><span class="n">2-2</span>게임 만들기 맡기기</a></li><li><a href="#s2_3"><span class="n">2-3</span>열어 보고 고치기</a></li></ol>
+  <p class="grp"><span class="k">실습 3</span><a href="#p-3">토지피복지도로 산림 파편화 지표 구하기</a></p>
+  <ol><li><a href="#s3_1"><span class="n">3-1</span>새 책상 — <code>실습03</code> · 자료 보기</a></li><li><a href="#s3_2"><span class="n">3-2</span>타일 12장 합치기</a></li><li><a href="#s3_3"><span class="n">3-3</span>산림 파편화 지표</a></li><li><a href="#s3_4"><span class="n">3-4</span>조건 걸기 — 검증</a></li></ol>
+  <p class="grp"><a href="#x20">도전 과제 — 웹지도 · 누적 경관</a></p>
+</nav>
+
+<section class="sec" id="x0"><h2><span class="t">오늘 끝나면 내 컴퓨터에 남는 것</span></h2>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>실습</th><th>어떤 일</th><th>남는 것</th></tr></thead><tbody>
+<tr><td>실습 1</td><td>조원 셋이 따로 적은 야장 엑셀 취합 · 양식 맞추기</td><td><code>임분조사_취합.xlsx</code> — 3개 조 야장을 임분조사 양식 하나로, ha당 본수 · 흉고단면적까지</td></tr>
+<tr><td>실습 2</td><td>수종 특징 표로 공부용 도구 만들기 (바이브코딩)</td><td><code>수목학퀴즈.html</code> — 두 번 누르면 열리는 4지선다 퀴즈 게임</td></tr>
+<tr><td>실습 3</td><td>공간자료 처리 — 도엽 합치기 · 지표 계산 · 검증</td><td><code>토지피복_합본.tif</code> · <code>산림파편화_지표.csv</code> · 산림 패치 지도 PNG</td></tr>
+</tbody></table></div>
+<p>오늘 내용은 한 줄로 말할 수 있습니다. <b>말로 시키면, 내 컴퓨터에 파일이 생깁니다.</b> 그리고 결과는 꼭 내 눈으로 확인합니다.</p>
+</section>
+
+<section class="sec" id="x1"><h2><span class="t">이 가이드 보는 법</span></h2>
+<p><b>1. 노트북 화면을 반으로 나눕니다.</b> 왼쪽에는 앱, 오른쪽에는 이 가이드를 띄웁니다.</p>
+<div class="step"><span class="step-no">1</span><h4>앱 창을 한 번 누릅니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4>키보드에서 <b>윈도우 키 + ←</b> 를 누릅니다. 앱이 화면 왼쪽 절반으로 갑니다.</h4></div>
+<div class="step"><span class="step-no">3</span><h4>이 가이드 창을 한 번 누릅니다.</h4></div>
+<div class="step"><span class="step-no">4</span><h4><b>윈도우 키 + →</b> 를 누릅니다. 가이드가 오른쪽 절반으로 갑니다.</h4></div>
+<p>(맥: 창 왼쪽 위 초록 단추에 마우스를 올리면 나오는 메뉴에서 왼쪽 · 오른쪽을 고릅니다)</p>
+<p><b>2. 검은 상자의 문장은 복사 단추로 복사해 앱 입력창에 붙여 넣고 Enter 를 누릅니다.</b> 직접 치면 글자가 달라져 결과가 달라질 수 있습니다.</p>
+<p><b>3. 초록 상자가 「이렇게 보이면 성공」, 빨간 상자가 「막히면」 입니다.</b> 빨간 상자의 문장을 그대로 다시 말하면 대부분 풀립니다.</p>
+<p><b>4. 위 「내가 쓰는 앱」에서 앱을 고르면</b> 폴더 · 권한 · 모델 설명이 그 앱 기준으로 바뀝니다. 문장은 어느 앱이든 같습니다.</p>
+<div class="legend"><span><i style="background:#0a0a0a"></i>붙여 넣을 문장 (맡겨 보기)</span><span><i style="background:#f97316"></i>조건 걸기 — 결과를 보고 한 마디 더</span><span><i style="background:#22c55e"></i>이렇게 보이면 성공</span><span><i style="background:#ef4444"></i>막히면</span></div>
+</section>
+
+<section class="sec" id="p-0"><h2><span class="no">준비</span><span class="t">에이전트를 내 컴퓨터에 들이기</span></h2>
+<p class="lead">15분 · 앱을 열고 단추 세 개 — <b>폴더 · 권한 · 모델</b> — 을 맞춘 뒤 인사합니다. 집에서 미리 해 오면 수업에서는 0-6 인사부터 시작합니다.</p>
+
+<h3 id="s0_1"><span class="n">0-1</span>자료 풀고 앱 열기</h3>
+<div class="step"><span class="step-no">1</span><h4>실습 자료 zip 을 <b>C:\workspace</b> 에 풉니다. (맥: 홈 폴더 아래 workspace)</h4><p>풀고 나면 <code>실습01</code> · <code>실습02</code> · <code>실습03</code> 폴더와 <code>따라할_문장.txt</code> 가 보여야 합니다. 폴더 이름은 바꾸지 마세요 — 문장이 이 이름을 그대로 씁니다.</p></div>
+<div class="step"><span class="step-no">2</span><h4>앱을 열고 평소 쓰는 계정으로 로그인합니다.</h4></div>
+<div class="step"><span class="step-no">3</span><h4>일하는 화면으로 들어갑니다.</h4></div>
+<div class="app" data-app="ag"><header>Antigravity</header><ol><li><a href="https://antigravity.google" target="_blank" rel="noopener">antigravity.google</a> 에서 내려받아 설치합니다. 구글(Gemini) 기반 에이전트 앱으로, 무료 사용량이 있고 사용량은 구글 계정 단위입니다.</li><li><b>구글 계정</b>으로 로그인합니다. 개인 계정을 권장합니다.</li><li>첫 화면에 <b>Projects</b> 가 보이면 들어온 것입니다.</li></ol></div>
+<div class="app" data-app="cl"><header>클로드</header><ol><li><a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> 에서 <b>Claude 데스크톱 앱</b>(Windows · Mac)을 설치하고 로그인합니다.</li><li>왼쪽 메뉴에서 <b>Cowork</b> 를 고릅니다. 내 PC 의 폴더를 다루는 Cowork 는 유료 요금제(Pro 이상)에서 쓸 수 있습니다. 무료 계정이면 오늘은 Antigravity 로 하세요.</li><li>터미널에 익숙하면 <b>Claude Code</b>(명령창에서 <code>claude</code>)로 같은 문장을 써도 됩니다.</li></ol></div>
+<div class="app" data-app="gp"><header>ChatGPT (Codex)</header><ol><li>ChatGPT 의 에이전트 앱은 <b>Codex</b> 입니다. Windows 는 Microsoft Store 에서 「Codex」를, Mac 은 <a href="https://chatgpt.com/codex" target="_blank" rel="noopener">chatgpt.com/codex</a> 에서 내려받아 설치합니다.</li><li><b>ChatGPT 계정</b>으로 로그인합니다. 사용량은 요금제에 따라 다르며 유료 구독(Plus 등)을 권장합니다.</li><li>Windows 사용자 이름이 한글이면 첫 실행에서 오류가 날 수 있습니다 → 영문 이름의 Windows 계정을 쓰거나, 환경 변수 <code>CODEX_HOME</code> 을 <code>C:\codex</code> 같은 영문 폴더로 지정합니다. 안 되면 오늘은 Antigravity 로.</li></ol></div>
+<div class="check"><b>이렇게 보이면 성공</b>앱 첫 화면이 떠 있고, 탐색기에 <code>C:\workspace\실습01</code> 폴더(엑셀 4개)가 보입니다.</div>
+
+<h3 id="s0_2"><span class="n">0-2</span>화면 세 군데</h3>
+<p>처음엔 복잡해 보여도 세 군데만 알면 됩니다.</p>
+<div class="step"><span class="step-no">1</span><h4><b>왼쪽</b> — 프로젝트(폴더)와 지금까지 나눈 대화 목록입니다. 새 대화는 여기서 엽니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4><b>가운데</b> — 에이전트와 주고받는 말이 나옵니다. 에이전트가 어떤 파일을 읽고 만들었는지도 여기 나옵니다.</h4></div>
+<div class="step"><span class="step-no">3</span><h4><b>입력창 근처</b> — 설정 단추들이 있습니다. 오늘은 이 가운데 세 개만 맞춥니다: <b>폴더 · 권한 · 모델</b>.</h4></div>
+<div class="app" data-app="ag"><header>Antigravity</header><p>오른쪽에 하나 더 — <b>보조 창(Auxiliary Pane)</b>. 오른쪽 위 단추로 여닫으며, 에이전트가 세운 <b>Task list</b> 와 <b>Implementation Plan</b>, 끝난 뒤 <b>Walkthrough</b>(결과 요약)가 여기 뜹니다.</p></div>
+<div class="app" data-app="cl"><header>클로드</header><p>Cowork 에서는 작업 중에 할 일 목록이 가운데에 보이고, 끝나면 만든 파일이 카드로 나타납니다. 연결한 폴더는 입력창 위에 이름으로 표시됩니다.</p></div>
+<div class="app" data-app="gp"><header>ChatGPT (Codex)</header><p>왼쪽에 프로젝트 목록, 가운데에 대화, 입력창 아래에 권한 단추와 모델 단추가 있습니다. 바뀐 파일은 차이(diff)로 보여 줍니다.</p></div>
+
+<h3 id="s0_3"><span class="n">0-3</span>폴더 — 에이전트의 책상</h3>
+<p>에이전트는 <b>받은 폴더 안에서만</b> 일합니다. 그래서 이 폴더를 에이전트의 책상이라고 부릅니다. 오늘은 모두 같은 자리 — <b>C:\workspace\실습01</b> (맥: ~/workspace/실습01). 폴더는 zip 을 푼 자리에 이미 있으니 고르기만 하면 됩니다.</p>
+<div class="app" data-app="ag"><header>Antigravity</header><ol><li>왼쪽 <b>Projects</b> → <b>Create New Project</b> (또는 New Project)</li><li><b>Add Folder</b> → <code>C:\workspace\실습01</code> 고르기 → <b>Create</b></li><li><b>Start first conversation</b> 을 눌러 대화를 엽니다</li></ol><p class="note" style="margin:.4rem 1rem">workspace 전체를 고르지 않습니다 — 실습 폴더 하나씩. 책상이 좁을수록 에이전트가 헤매지 않고 사용량도 아낍니다. 실습 2 · 3 은 같은 방법으로 새 프로젝트를 만듭니다.</p></div>
+<div class="app" data-app="cl"><header>클로드</header><ol><li><b>+ 새로 생성</b> → 입력창 위 <b>폴더 이름 단추</b></li><li>→ <b>폴더 열기…</b> → workspace → <b>「실습01」 고르기</b> → 폴더 선택</li></ol><p class="note" style="margin:.4rem 1rem">폴더 + 모양 단추(다른 폴더 추가)는 누르지 않습니다. 연결한 폴더 안의 파일만 읽고 쓸 수 있습니다.</p></div>
+<div class="app" data-app="gp"><header>ChatGPT (Codex)</header><ol><li>프로젝트 <b>+</b> → 이름 「실습01」 → 소스 폴더 <b>추가</b></li><li>→ workspace 안 <b>「실습01」 고르기</b> → <b>프로젝트 만들기</b> → <b>Trust folder</b> → 연필(새 대화)</li></ol><p class="note" style="margin:.4rem 1rem">폴더 선택창이 바탕화면에서 열리면 C 드라이브로 올라가 workspace 를 찾습니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>왼쪽 목록에 「실습01」, 가운데에 빈 입력창.</div>
+
+<h3 id="s0_4"><span class="n">0-4</span>권한 — 물어볼지, 알아서 할지</h3>
+<p>에이전트는 폴더 안에서 파일을 읽고, 쓰고, 프로그램을 실행합니다. 권한은 이걸 할 때마다 나한테 <b>물어볼지</b>, <b>알아서</b> 할지 정하는 단추입니다. 물어보게 하면 안전하지만 허락을 계속 눌러야 하고, 알아서 하게 두면 끝까지 쭉 일합니다.</p>
+<div class="app" data-app="ag"><header>Antigravity</header><ol><li>왼쪽 프로젝트 이름 옆 <b>톱니(⚙)</b> → <b>Project settings</b></li><li><b>Security Preset</b> — 터미널 명령 · 파일 접근을 <b>검토 없이 진행</b>하는 쪽으로</li><li><b>Agent Behaviour</b> — 계획(Plan)은 <b>검토 없이 바로 실행</b>으로</li></ol><p class="note" style="margin:.4rem 1rem">IDE 형태로 쓰는 분은 Settings → Agent → <b>Terminal Command Auto Execution: Always Proceed</b> · <b>Review Policy: Always Proceed</b> 가 같은 뜻입니다. 프로젝트마다 따로 설정되니 실습 2 · 3 에서 다시 확인합니다.</p></div>
+<div class="app" data-app="cl"><header>클로드</header><ol><li>설정 → <b>Claude Code</b> → <b>권한 우회 모드 허용</b> 켜기</li><li>입력창 아래 권한 단추(처음엔 「편집 자동 수락」) → <b>권한 무시</b></li></ol><p class="note" style="margin:.4rem 1rem">Cowork 에서 승인 창이 뜨면 무엇을 하려는지 한 줄 읽고 허용합니다. 기관 계정이라 스위치가 없으면 그대로 두고, 허락 창이 뜰 때마다 읽고 누르면 됩니다.</p></div>
+<div class="app" data-app="gp"><header>ChatGPT (Codex)</header><ol><li>설정(Ctrl + ,) → 일반 → <b>전체 액세스</b> 켜기</li><li>앱으로 돌아가기 → 권한 단추 → <b>전체 권한</b></li></ol></div>
+<div class="fail"><b>약속</b>「알아서」는 오늘 만든 실습 폴더에서만 씁니다. 내 문서 폴더처럼 중요한 파일이 든 곳에서는 「물어보기」로 둡니다. 개인정보 · 공개하면 안 되는 자료는 넣지 않습니다.</div>
+<div class="check"><b>이렇게 보이면 성공</b>실습 중 「허락해 주세요」 창이 거의 뜨지 않습니다.</div>
+
+<h3 id="s0_5"><span class="n">0-5</span>모델 — 누구에게 맡길지</h3>
+<p>모델은 일을 맡을 <b>AI 의 두뇌</b>입니다. 크고 깊이 생각할수록 잘하지만 느리고 <b>사용량을 많이</b> 씁니다. 오늘 실습은 전부 보통 수준이면 충분합니다. 결과가 엉성하면 그때 한 칸 올립니다.</p>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>깊이</th><th>언제</th><th>오늘</th></tr></thead><tbody><tr><td>얕게</td><td>간단한 질문 · 짧은 정리</td><td></td></tr><tr><td>보통</td><td>대부분의 일</td><td><b>오늘 실습 전부 — 기본값</b></td></tr><tr><td>깊게</td><td>결과가 엉성할 때 · 복잡한 분석</td><td></td></tr></tbody></table></div>
+<div class="app" data-app="ag"><header>Antigravity</header><p>입력창 근처 <b>모델 이름</b>을 누르면 목록이 뜹니다. 오늘은 <b>기본 Gemini 모델 그대로</b> 둡니다. 무료 계정은 쓸 수 있는 양이 정해져 있습니다 — 쉬어 가기에서 봅니다.</p></div>
+<div class="app" data-app="cl"><header>클로드</header><p>모델 단추 → <b>Sonnet</b> · 옆 <b>노력</b> 단추는 <b>중간</b> 그대로. (모델 이름은 버전에 따라 조금 다를 수 있습니다)</p></div>
+<div class="app" data-app="gp"><header>ChatGPT (Codex)</header><p>모델 단추 → 생각 깊이가 적힌 글자(예: High)를 누르면 모델 목록 → 기본 모델을 고르고 막대에서 <b>Medium</b>. 새 프로젝트는 다른 값으로 시작할 수 있으니 확인합니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>입력창 근처에 모델 이름이 보이면 됩니다 — 바꿀 필요 없음.</div>
+
+<h3 id="s0_6"><span class="n">0-6</span>인사하기</h3>
+<p>단추 세 개를 다 맞췄습니다. 이제 말을 걸어 봅니다. 에이전트가 내가 고른 폴더에서 제대로 일하는지 확인하는 인사입니다.</p>
+<div class="step"><span class="step-no">1</span><h4>아래 문장을 복사합니다.</h4></div>
+<div class="prompt"><div class="bar"><span>준비 0-6 · 인사</span><button type="button" class="copy">복사</button></div><pre>안녕! 너는 지금 어느 폴더에서 일하고 있어? 그 폴더 안에 무엇이 있는지도 알려 줘.</pre></div>
+<div class="step"><span class="step-no">2</span><h4>앱의 입력창을 누르고 붙여 넣습니다.</h4></div>
+<div class="step"><span class="step-no">3</span><h4>Enter 를 누릅니다.</h4></div>
+<div class="check"><b>이렇게 보이면 성공</b>「실습01 폴더에서 일하고 있고, 엑셀 파일 4개가 있다」 — 파일 이름까지 읽었으면 폴더도 맞고 권한도 맞은 겁니다.</div>
+<div class="fail"><b>다른 폴더 이름이 나오면</b>새 대화를 열고 0-3 을 다시 합니다.</div>
+</section>
+
+<section class="sec" id="p-1"><h2><span class="no">실습 1</span><span class="t">흩어진 매목조사 야장을 양식 하나로</span></h2>
+<p class="lead">25분 · 조원 세 명이 표준지(20m × 20m)에서 따로 적은 매목조사 야장 엑셀 3개를 <b>임분조사 양식 한 장으로 모은 취합 엑셀</b>로 만듭니다. ha당 본수 · 평균 직경 · 흉고단면적까지. 세 야장은 칸 이름도, 순서도, 모양도 제각각입니다. (수종 · 직경 · 수고는 모두 지어낸 가상 자료)</p>
+
+<h3 id="s1_1"><span class="n">1-1</span>자료 확인</h3>
+<div class="step"><span class="step-no">1</span><h4>탐색기에서 <code>C:\workspace\실습01</code> 을 엽니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4><code>1조_야장.xlsx</code> · <code>2조_야장.xlsx</code> · <code>3조_야장.xlsx</code> · <code>임분조사_양식.xlsx</code> 네 개가 있는지 봅니다.</h4></div>
+<div class="check"><b>이렇게 보이면 성공</b>엑셀 4개. 0-6 인사에서 에이전트가 말한 파일과 같습니다.</div>
+
+<h3 id="s1_2"><span class="n">1-2</span>내가 먼저 열어 보기</h3>
+<p>맡기기 전에 내가 먼저 봅니다. 무엇이 다른지 알아야 결과가 맞는지 확인할 수 있습니다.</p>
+<div class="step"><span class="step-no">1</span><h4>야장 세 개를 차례로 열어 봅니다 — 조마다 <b>칸 이름</b>이 다릅니다. (예: 흉고직경 · DBH · 직경(cm))</h4></div>
+<div class="step"><span class="step-no">2</span><h4><code>임분조사_양식.xlsx</code> 를 열어 어떤 칸을 채워야 하는지 봅니다 — 조 · 수종 · 본수 · ha당 본수 · 평균 직경 · 흉고단면적.</h4></div>
+<div class="step"><span class="step-no">3</span><h4>3조 야장에 <b>비어 있는 수고</b>와 <b>「xx.xcm」처럼 이상한 값</b>이 있는 것을 눈에 담아 둡니다.</h4></div>
+<div class="step"><span class="step-no">4</span><h4><b>엑셀 창을 모두 닫습니다.</b> 열어 둔 채로 맡기면 에이전트가 파일을 못 고칩니다.</h4></div>
+
+<h3 id="s1_3"><span class="n">1-3</span>취합 맡기기</h3>
+<div class="step"><span class="step-no">1</span><h4>0-6 에서 인사한 그 대화에 아래 문장을 붙여 넣고 Enter 를 누릅니다.</h4></div>
+<div class="prompt"><div class="bar"><span>실습 1 · 1-3 · 취합 맡기기</span><button type="button" class="copy">복사</button></div><pre>1조_야장, 2조_야장, 3조_야장 엑셀을 임분조사_양식.xlsx 에 맞게 하나로 모아서 임분조사_취합.xlsx 로 만들어 줘. 조마다 칸 이름이 달라도 같은 뜻이면 맞춰 주고, 본수 합계가 원본과 맞는지도 확인해 줘.</pre></div>
+<div class="step"><span class="step-no">2</span><h4>에이전트가 파일을 읽고 · 프로그램을 쓰고 · 결과를 확인하는 모습이 가운데에 지나갑니다. 1~2분.</h4><p>발표에서 본 「읽고 · 쓰고 · 실행하고 · 생각하는」 바퀴가 지금 돌고 있는 겁니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b><code>실습01</code> 에 <code>임분조사_취합.xlsx</code> 가 생기고, 에이전트가 본수 합계를 확인했다고 말합니다.</div>
+<div class="fail"><b>「파이썬이 없다」 「패키지가 없다」</b>→ 필요한 프로그램이나 패키지는 네가 설치하고 다시 해 줘.</div>
+
+<h3 id="s1_4"><span class="n">1-4</span>결과 열어 보기 · 조건 걸기</h3>
+<div class="step"><span class="step-no">1</span><h4><code>임분조사_취합.xlsx</code> 를 두 번 눌러 엑셀로 엽니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4>본수 합계가 <b>73본</b>인지, 3조 빈칸을 어떻게 했는지 봅니다.</h4><p>정답 — 1조 24본 · 2조 27본 · 3조 22본 = 73본 · ha당 본수 600 · 675 · 550. 3조 7번 수고는 <b>비어 있어야 정상</b>입니다. 그럴듯한 숫자를 지어냈다면 바로 조건을 겁니다.</p></div>
+<div class="step"><span class="step-no">3</span><h4>같은 대화에 아래 문장을 붙여 넣어 어떻게 맞췄는지 물어봅니다.</h4></div>
+<div class="prompt"><div class="bar"><span>실습 1 · 1-4 · 결과 보고 물어보기</span><button type="button" class="copy">복사</button></div><pre>조마다 칸 이름이 다르던데 어떻게 맞췄어? 비어 있거나 이상했던 값은 어떻게 처리했는지도 알려 줘.</pre></div>
+<div class="step"><span class="step-no">4</span><h4>시간이 남으면 조건을 겁니다 — 지어내지 말고 표시하게, 그리고 시트를 하나 더.</h4></div>
+<div class="prompt cond"><div class="bar"><span>실습 1 · 1-4 · 조건 걸기 — 시간이 남으면</span><button type="button" class="copy">복사</button></div><pre>비어 있던 수고 값은 지어내지 말고 「확인 필요」라고 적어 줘. 그리고 수종별본수 시트도 채워 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b>3개 조가 양식 한 장에 · ha당 본수 · 흉고단면적 · 합계 줄까지. 다음에는 여러분 조의 실제 야장으로 같은 말을 해 보세요.</div>
+<div class="fail"><b>엑셀 파일을 못 고친다</b>→ 그 파일을 열어 둔 엑셀 창을 닫고 다시 보냅니다. <b>본수가 원본과 다르다</b>→ 「2조 본수가 원본보다 적어. 다시 확인해 줘」</div>
+</section>
+
+<section class="sec" id="x14"><h2><span class="t">쉬어 가기 — 얼마나 썼지?</span></h2>
+<p>에이전트는 말을 주고받을 때마다 <b>토큰</b>을 씁니다. 대화가 길어질수록 작업대(컨텍스트)에 쌓인 것이 많아져 느려지고, 헷갈리고, 사용량도 더 듭니다.</p>
+<div class="step"><span class="step-no">1</span><h4>앱의 사용량 표시를 한 번 봅니다. 무료 · 요금제마다 쓸 수 있는 양이 정해져 있습니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4><b>새 일은 새 대화</b> — 실습 2 는 새 책상(폴더)과 새 대화에서 시작합니다.</h4><p>실습 1 의 엑셀 내용이 작업대에 남아 있으면 헷갈리고 사용량도 더 듭니다.</p></div>
+<div class="app" data-app="ag"><header>Antigravity</header><p>무료 사용량을 다 썼다는 안내가 뜨면 → 잠시 기다리거나 다른 구글 계정으로 로그인합니다. 옆 사람 화면을 같이 보며 진행해도 됩니다.</p></div>
+<div class="app" data-app="cl"><header>클로드</header><p>사용량 한도에 닿으면 안내가 뜨고 일정 시간 뒤 다시 채워집니다. 그동안은 옆 사람 화면으로 같이 봅니다.</p></div>
+<div class="app" data-app="gp"><header>ChatGPT (Codex)</header><p>요금제별 사용량 창이 있습니다. 한도에 닿으면 옆 사람 화면으로 같이 보고, 집에서 이어서 합니다.</p></div>
+</section>
+
+<section class="sec" id="p-2"><h2><span class="no">실습 2</span><span class="t">수목학 퀴즈 게임 만들기</span></h2>
+<p class="lead">15분 · 수종 20종의 잎 · 수피 · 열매 특징을 적은 표 하나로 <b>4지선다 퀴즈 웹게임</b>을 만듭니다. 바이브코딩 — 말하고, 보고, 다시 말해서 고치는 것 — 을 가장 직접 체감하는 실습입니다.</p>
+
+<h3 id="s2_1"><span class="n">2-1</span>새 책상 — <code>실습02</code></h3>
+<div class="app" data-app="ag"><header>Antigravity</header><ol><li>0-3 과 같은 방법으로 새 프로젝트 — Create New Project → Add Folder → <code>C:\workspace\실습02</code> → Create → Start first conversation</li><li>권한 설정(0-4)을 다시 확인합니다 — 프로젝트마다 따로 설정됩니다</li></ol></div>
+<div class="app" data-app="cl"><header>클로드</header><ol><li><b>+ 새로 생성</b> → 폴더 이름 단추 → 폴더 열기… → <code>실습02</code> 고르기</li></ol></div>
+<div class="app" data-app="gp"><header>ChatGPT (Codex)</header><ol><li>프로젝트 <b>+</b> → 이름 「실습02」 → 소스 폴더 추가 → <code>실습02</code> 고르기 → 프로젝트 만들기 → Trust folder → 새 대화</li></ol></div>
+<div class="step"><span class="step-no">1</span><h4><code>수종특징.csv</code> 를 메모장이나 엑셀로 한 번 열어 봅니다.</h4><p>수종 · 과 · 잎 특징 · 수피·열매 특징 · 힌트, 20줄. 소나무 · 곰솔 · 잣나무 · 낙엽송 · 편백 · 신갈 · 굴참 · 상수리 · 느티 · 단풍 · 아까시 … 다 봤으면 창을 닫습니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>왼쪽 목록에 「실습02」 · 가운데에 빈 입력창.</div>
+
+<h3 id="s2_2"><span class="n">2-2</span>게임 만들기 맡기기</h3>
+<div class="step"><span class="step-no">1</span><h4>아래 문장을 붙여 넣고 Enter.</h4></div>
+<div class="prompt"><div class="bar"><span>실습 2 · 2-2 · 게임 만들기 맡기기</span><button type="button" class="copy">복사</button></div><pre>수종특징.csv 를 읽고, 특징을 보고 수종 이름을 맞히는 4지선다 퀴즈 웹게임을 만들어 줘. 문제마다 잎 특징과 수피·열매 특징을 보여 주고, 10문제가 끝나면 점수를 보여 줘. 파일 하나(수목학퀴즈.html)로 만들어서 두 번 누르면 바로 열리게 해 줘.</pre></div>
+<div class="step"><span class="step-no">2</span><h4>1~2분 뒤 <code>실습02</code> 에 <code>수목학퀴즈.html</code> 이 생깁니다. 두 번 눌러 크롬에서 엽니다.</h4></div>
+<div class="step"><span class="step-no">3</span><h4>한 판 돌리며 <b>보기 설명이 수목학 지식과 맞는지</b> 봅니다.</h4><p>잎이 5개씩 모여나는 건 잣나무가 맞나? 편백 뒷면은 Y자가 맞나? 그럴듯한가 말고, 맞는가.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>크롬에서 퀴즈가 열리고 10문제 뒤 점수가 나옵니다.</div>
+<div class="fail"><b>화면이 하얗게만 나온다</b>→ 「화면이 안 보여. 고쳐 줘」 → 고친 뒤 브라우저 F5.</div>
+
+<h3 id="s2_3"><span class="n">2-3</span>열어 보고 고치기 — 조건 걸기</h3>
+<div class="step"><span class="step-no">1</span><h4>같은 대화에 아래 문장을 붙여 넣고 Enter.</h4></div>
+<div class="prompt cond"><div class="bar"><span>실습 2 · 2-3 · 조건 걸기</span><button type="button" class="copy">복사</button></div><pre>문제를 풀 때마다 정답과 짧은 해설을 보여 주고, 보기에 나오는 설명이 csv 와 다른 데가 없는지 대조해서 확인해 줘. 화면 색은 숲 느낌으로 바꿔 줘.</pre></div>
+<div class="step"><span class="step-no">2</span><h4>끝나면 브라우저에서 <b>F5</b>(새로고침) → 다시 한 판.</h4></div>
+<div class="step"><span class="step-no">3</span><h4>시간이 남으면 내 마음대로 한 마디 더.</h4><p>「문제를 20개로 늘려 줘」 「틀린 문제만 다시 풀게 해 줘」 「과(科)별로 골라 풀 수 있게 해 줘」 「제한 시간 10초를 넣어 줘」</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>답을 고르면 해설이 뜨고, 색이 바뀐 게임. 이게 바이브코딩입니다 — 말하고, 보고, 다시 말해서 고친다.</div>
+</section>
+
+<section class="sec" id="p-3"><h2><span class="no">실습 3</span><span class="t">토지피복지도로 산림 파편화 지표 구하기</span></h2>
+<p class="lead">25분 · 환경부 대분류 토지피복지도 도엽 12장(대전 · 세종 · 청주 일대)을 한 장으로 합치고, 산림만 뽑아 <b>패치 수 · 평균 패치 크기 · edge density</b> 를 계산한 뒤, 단위와 좌표계를 검증합니다. 공간자료를 맡길 때는 자료의 기준을 내가 먼저 아는 것이 중요합니다.</p>
+
+<h3 id="s3_1"><span class="n">3-1</span>새 책상 — <code>실습03</code> · 자료 보기</h3>
+<div class="app" data-app="ag"><header>Antigravity</header><ol><li>새 프로젝트 — Create New Project → Add Folder → <code>C:\workspace\실습03</code> → Create → Start first conversation · 권한(0-4) 다시 확인</li></ol></div>
+<div class="app" data-app="cl"><header>클로드</header><ol><li><b>+ 새로 생성</b> → 폴더 이름 단추 → 폴더 열기… → <code>실습03</code> 고르기</li></ol></div>
+<div class="app" data-app="gp"><header>ChatGPT (Codex)</header><ol><li>프로젝트 <b>+</b> → 이름 「실습03」 → 소스 폴더 추가 → <code>실습03</code> 고르기 → 프로젝트 만들기 → Trust folder → 새 대화</li></ol></div>
+<div class="step"><span class="step-no">1</span><h4><code>토지피복타일</code> 폴더 — 압축파일 12개가 있는지 봅니다. <b>풀지 않습니다.</b> 압축 푸는 것도 에이전트가 합니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4><code>토지피복_코드표.png</code> 와 <code>자료설명.txt</code> 를 열어 봅니다 — 산림이 몇 번인지, 해상도와 좌표계가 무엇인지. 다 봤으면 창을 닫습니다.</h4></div>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>값</th><th>대분류</th><th>값</th><th>대분류</th></tr></thead><tbody><tr><td>1</td><td>시가화 · 건조지역</td><td>5</td><td>습지</td></tr><tr><td>2</td><td>농업지역</td><td>6</td><td>나지</td></tr><tr><td>3</td><td><b>산림지역 ← 오늘 뽑을 것</b></td><td>7</td><td>수역</td></tr><tr><td>4</td><td>초지</td><td colspan="2">해상도 30m · 좌표계 EPSG:5186(미터) · 출처 환경부 환경공간정보서비스</td></tr></tbody></table></div>
+<div class="check"><b>이렇게 보이면 성공</b>「산림은 3번, 30m, 미터 좌표계」 — 이 셋을 알고 시작합니다.</div>
+
+<h3 id="s3_2"><span class="n">3-2</span>타일 12장 합치기</h3>
+<div class="step"><span class="step-no">1</span><h4>아래 문장을 붙여 넣고 Enter → <b>3~5분</b> (처음 한 번 공간 패키지 설치 포함).</h4><p>압축을 풀고 · 좌표를 읽고 · 12장을 이어 붙이고 · 색을 입혀 그리는 모습이 지나갑니다.</p></div>
+<div class="prompt"><div class="bar"><span>실습 3 · 3-2 · 타일 합치기</span><button type="button" class="copy">복사</button></div><pre>토지피복타일 폴더 안의 압축파일 12개를 모두 풀어서 하나의 토지피복지도로 합치고, 토지피복_합본.tif 로 저장해 줘. 좌표계와 해상도는 원본 그대로 두고, 합친 지도를 토지피복_코드표.png 의 대분류 색으로 그린 PNG 그림도 저장해 줘. 필요한 프로그램이나 패키지는 네가 설치해서 해 줘.</pre></div>
+<p class="note">문장에 넣은 조건 둘 — <b>「좌표계와 해상도는 원본 그대로」</b>(말하지 않으면 멋대로 바꿀 수 있습니다) · <b>「코드표의 색으로」</b>(그림을 보고 산림 · 수역이 제자리인지 눈으로 확인하려고)</p>
+<div class="check"><b>이렇게 보이면 성공</b><code>실습03</code> 에 <code>토지피복_합본.tif</code> + PNG 지도 — 4 × 3 으로 이어진 지도 한 장. PNG 를 열어 대전 시가지(빨강)와 금강 · 대청호(파랑)가 보이면 좌표가 맞은 겁니다.</div>
+<div class="fail"><b>타일 사이에 줄이 보이거나 빠진 조각이 있다</b>→ 타일 경계가 어긋나. 좌표를 다시 확인해서 합쳐 줘. <b>설치가 몇 분째</b>→ 기다립니다(rasterio · geopandas 는 처음 설치에 3~5분). 10분 넘으면 「설치를 멈추고 지금 있는 걸로 해 줘」</div>
+
+<h3 id="s3_3"><span class="n">3-3</span>산림 파편화 지표</h3>
+<div class="step"><span class="step-no">1</span><h4>같은 대화에 아래 문장을 붙여 넣고 Enter.</h4></div>
+<div class="prompt"><div class="bar"><span>실습 3 · 3-3 · 지표 계산</span><button type="button" class="copy">복사</button></div><pre>토지피복_합본.tif 에서 산림(값 3)만 추출해서, 패치별 면적(ha)과 둘레(m)를 구하고 파편화 지표(패치 수, 평균 패치 크기, edge density)를 계산해 산림파편화_지표.csv 로 저장한 뒤, 산림 패치 지도를 PNG 로 저장해 줘.</pre></div>
+<div class="step"><span class="step-no">2</span><h4><code>산림파편화_지표.csv</code> 를 열어 숫자를 가늠합니다.</h4><p>가늠자 — 픽셀 하나가 30 m × 30 m = <b>0.09 ha</b>, 지역 전체는 약 <b>75만 ha</b>. 패치 수가 수천 개, 평균 크기가 몇 ha 수준이면 그럴듯합니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b><code>산림파편화_지표.csv</code> + 산림 패치 지도 PNG(패치마다 다른 색).</div>
+
+<h3 id="s3_4"><span class="n">3-4</span>조건 걸기 — 검증</h3>
+<p>공간분석에서 AI 가 자주 틀리는 곳 — <b>단위</b>(m² 를 ha 라고 부르기) · <b>좌표계</b>(위경도 자료로 면적 계산) · <b>NoData</b>(빈 픽셀을 산림으로 세기) · <b>경계</b>(지도 가장자리에서 잘린 패치). 그래서 조건을 걸어 확인합니다.</p>
+<div class="step"><span class="step-no">1</span><h4>같은 대화에 아래 문장을 붙여 넣고 Enter → 비교표를 읽어 봅니다.</h4></div>
+<div class="prompt cond"><div class="bar"><span>실습 3 · 3-4 · 조건 걸기 — 검증</span><button type="button" class="copy">복사</button></div><pre>면적이 ha 단위가 맞는지, 좌표계가 미터 단위인지 확인해 줘. 그리고 1 ha 미만의 작은 패치는 빼고 지표를 다시 계산해서 비교표로 보여 주고, 가장 큰 산림 패치 5개의 면적을 알려 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b>작은 패치를 빼면 패치 수는 크게 줄고, 평균 크기는 크게 늘어야 정상입니다. 공간자료는 결과를 QGIS 로 한 번 열어 겹쳐 보는 습관 — 2일차에 합니다.</div>
+<p>실습 3 정리 — 타일 합치기 → 산림 추출 → 지표 → 검증, 말 세 마디로. 다음에는 내 연구 지역 토지피복으로 같은 말을 해 보세요.</p>
+</section>
+
+<section class="sec" id="x20"><h2><span class="t">도전 과제 — 시간이 남거나 집에서</span></h2>
+<h3><span class="n">A</span>조사지점 웹지도 · 5분</h3>
+<p>실습 1 에서 모은 표준지 3곳의 좌표(<code>실습03/조사지점.csv</code>, 가상 좌표)로 배경지도 위에 점을 찍고, 누르면 조 · 우점수종 · 본수가 뜨는 웹지도를 만듭니다. 2일차 웹지도 실습의 맛보기입니다.</p>
+<div class="prompt"><div class="bar"><span>도전 A · 조사지점 웹지도 (폴더: 실습03)</span><button type="button" class="copy">복사</button></div><pre>조사지점.csv 의 위도·경도로 배경지도 위에 조사지점을 표시하는 웹지도를 만들어 줘. 지점을 누르면 조 · 우점수종 · 본수가 팝업으로 뜨게 하고, 조사지점지도.html 하나로 저장해서 두 번 누르면 바로 열리게 해 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b><code>조사지점지도.html</code> 을 두 번 누르면 배경지도 위에 점 3개, 누르면 팝업.</div>
+<h3><span class="n">B</span>벌채구역 누적 경관(가시권) 분석 · 집에서</h3>
+<p>DEM 과 벌채구역 · 조망점 자료로 두 조망점에서 벌채구역이 얼마나 보이는지 <b>누적 가시권</b>을 계산하고 docx 보고서까지 만듭니다. 산림경영 · 경관 평가에 바로 쓰는 분석입니다. 자료(275MB)는 <a href="https://drive.google.com/file/d/1sHO-Ru7XRSgQvOEF0n6F_PmJ2LIWWiz9/view?usp=sharing" target="_blank" rel="noopener">여기서 내려받아</a> <code>C:\workspace\실습04</code> 폴더를 만들어 그 안에 풉니다(dem.tif · 벌채구역_merge · 조망점1.zip · 조망점2.zip · 경관분석 예시.png 가 바로 보이게). 그리고 0-3 과 같은 방법으로 <code>실습04</code> 를 새 책상으로 엽니다.</p>
+<div class="prompt"><div class="bar"><span>도전 B · 누적 경관 분석 (폴더: 실습04)</span><button type="button" class="copy">복사</button></div><pre>「경관분석 예시.png」와 같이, 벌채구역(벌채구역_merge 폴더) 안에서 조망점1.zip 과 조망점2.zip 위치에서 본 누적 가시권(경관) 분석을 dem.tif 로 실시하고, 결과는 result 폴더를 만들어 지도 그림과 함께 docx 파일로 저장해 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b><code>result</code> 폴더에 지도 그림과 docx 보고서 — 결과를 예시 그림과 비교해 보세요.</div>
+</section>
+
+<section class="sec" id="x30"><h2><span class="t">결과 내기</span></h2>
+<p>실습이 끝나면 <a href="https://tally.so/r/ped2LJ" target="_blank" rel="noopener">실습 결과 내기 폼</a>에 아래를 올려 주세요. 낸 것은 강사만 봅니다. 못 만든 것은 비워 두고 만든 것까지만 올리면 됩니다.</p>
+<ul class="checklist">
+<li><label><input type="checkbox"><span>이름 · 이메일 · 오늘 쓴 AI 에이전트(Antigravity · 클로드 · ChatGPT)</span></label></li>
+<li><label><input type="checkbox"><span>도전 A — <code>조사지점지도.html</code> 파일, 또는 올려 둔 공유 주소</span></label></li>
+<li><label><input type="checkbox"><span>도전 B — 벌채구역 누적경관 <code>결과보고서.pdf</code> 파일, 또는 공유 주소</span></label></li>
+<li><label><input type="checkbox"><span>자유과제 — 본인이 해 본 결과 파일 또는 공유 주소</span></label></li>
+<li><label><input type="checkbox"><span>진행하며 막힌 부분, 하고 싶은 말</span></label></li>
+</ul>
+<div class="help">파일은 한 개에 10MB 까지 올릴 수 있습니다 → <a href="https://tally.so/r/ped2LJ" target="_blank" rel="noopener">실습 결과 내기 폼 열기</a></div>
+</section>
+
+<section class="sec" id="x31"><h2><span class="t">막히면</span></h2>
+<p>막히는 곳은 대부분 비슷하고, 대부분은 에이전트에게 다시 말하면 풀립니다.</p>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>이럴 때</th><th>이렇게</th></tr></thead><tbody>
+<tr><td>다른 폴더 이름이 나와요</td><td>새 대화를 열고 실습 폴더를 다시 고릅니다 (0-3)</td></tr>
+<tr><td>「허락해 주세요」 창이 계속 떠요</td><td>권한이 「물어보기」입니다 → 0-4 를 다시 봅니다</td></tr>
+<tr><td>파이썬 · 패키지가 없대요</td><td>「필요한 프로그램이나 패키지는 네가 설치하고 다시 해 줘」</td></tr>
+<tr><td>설치가 몇 분째예요</td><td>공간 패키지(rasterio · geopandas)는 처음 설치에 3~5분 — 기다립니다 · 10분 넘으면 「설치를 멈추고 지금 있는 걸로 해 줘」</td></tr>
+<tr><td>엑셀 파일을 못 고친대요</td><td>그 파일을 열어 둔 엑셀 창을 닫고 다시 보냅니다</td></tr>
+<tr><td>게임 화면이 하얗게만 나와요</td><td>「화면이 안 보여. 고쳐 줘」 → 고친 뒤 브라우저 F5</td></tr>
+<tr><td>지도 그림이 안 열려요</td><td>PNG 가 아닌 형식으로 저장됐는지 봅니다 → 「지도를 PNG 그림으로 다시 저장해 줘」</td></tr>
+<tr><td>한글이 깨져요</td><td>「엑셀에서 열어도 한글이 안 깨지게 다시 저장해 줘」</td></tr>
+<tr><td>그럴듯한 숫자를 지어냈어요</td><td>조건을 겁니다 — 「비어 있던 값은 지어내지 말고 「확인 필요」라고 적어 줘」</td></tr>
+<tr><td>결과가 이상해요</td><td>어디가 이상한지 한 줄로 — 「2조 본수가 원본보다 적어. 다시 확인해 줘」</td></tr>
+<tr><td>한도에 도달했대요</td><td>옆 사람 화면으로 같이 봅니다 · 집에서 다시 채워진 뒤 이어서</td></tr>
+</tbody></table></div>
+<div class="help">그래도 막히면 <b>손을 들어 주세요</b> — 같이 화면을 보겠습니다. 이 표는 실습 자료의 따라할_문장.txt 맨 아래에도 있습니다.</div>
+</section>
+
+<footer><span>충남대학교 산림자원학과 특강 · 이상혁 · 한국환경연구원(KEI)</span><span>forestgeoai@gmail.com</span></footer>
+<div class="toast" id="toast">복사했습니다</div>
+
+<script>
+// 앱 고르기
+function setApp(app){
+  document.documentElement.setAttribute('data-app', app);
+  document.querySelectorAll('.osbtn').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.app===app ? 'true' : 'false'); });
+  try{ localStorage.setItem('cnu-guide-app', app); }catch(e){}
+}
+document.querySelectorAll('.osbtn').forEach(function(b){ b.addEventListener('click', function(){ setApp(b.dataset.app); }); });
+var initial = 'ag'; try{ var s = localStorage.getItem('cnu-guide-app'); if(s && document.querySelector('.osbtn[data-app="'+s+'"]')) initial = s; }catch(e){}
+setApp(initial);
+// 복사
+var toast = document.getElementById('toast'), tt;
+function showToast(msg){ toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove('show'); }, 1600); }
+function fallbackCopy(text){ var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select(); var ok=false; try{ ok = document.execCommand('copy'); }catch(e){} document.body.removeChild(ta); return ok; }
+document.querySelectorAll('.copy').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = btn.closest('.prompt').querySelector('pre').textContent.trim();
+    function done(ok){ if(ok){ btn.textContent='복사됨 ✓'; btn.classList.add('done'); showToast('복사했습니다 — 입력창에 Ctrl+V'); setTimeout(function(){ btn.textContent='복사'; btn.classList.remove('done'); }, 1800); } else { showToast('복사가 안 되면 문장을 드래그해서 Ctrl+C'); } }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(fallbackCopy(text)); }); } else { done(fallbackCopy(text)); }
+  });
+});
+</script>
+</body>
+</html>
