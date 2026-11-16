@@ -356,7 +356,9 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);font-si
 <div class="check"><b>이렇게 보이면 성공</b><code>result</code> 폴더에 피해 등급 지도 PNG 와 면적 CSV. dNBR &gt; 0.27 면적이 <b>약 13,600 ha</b> — 노트북 단계 4 의 「dNBR 피해 면적」과 같은 값입니다.</div>
 <div class="prompt"><div class="bar"><span>도전 A-3 · 웹지도로 만들기</span><button type="button" class="copy">복사</button></div><pre>방금 만든 피해 등급 지도를 배경지도 위에 반투명하게 겹친 웹지도로 만들어 줘. 등급 범례를 넣고, 의성산불_피해지도.html 하나로 저장해서 두 번 누르면 바로 열리게 해 줘.</pre></div>
 <div class="check"><b>이렇게 보이면 성공</b><code>의성산불_피해지도.html</code> 을 두 번 누르면 배경지도의 의성 · 안동 일대에 붉은 피해지가 겹쳐 보입니다. 확대해서 산 능선과 맞는지 봅니다.</div>
-<div class="fail"><b>배경지도가 회색이거나 「Access blocked」 가 보이면</b>인터넷 문제가 아닐 수 있습니다. 파일을 두 번 눌러 연 페이지(주소가 <code>file:///</code>)에는 무료 배경지도(OpenStreetMap) 서버가 지도를 보내 주지 않습니다. 에이전트에게 「배경지도가 안 떠. 다른 배경지도로 바꿔 줘」 또는 「이 지도를 로컬 서버로 열어 줘」라고 말합니다.</div>
+<div class="fail"><b>배경지도가 회색이거나 「Access blocked」 가 보이면</b>인터넷 문제가 아닙니다. 파일을 두 번 눌러 연 페이지(주소가 <code>file:///</code>)에는 무료 배경지도(OpenStreetMap) 서버가 지도를 보내 주지 않습니다. 아래 문장을 붙여 넣어 배경지도를 <b>브이월드(VWorld)</b>로 바꿉니다. 브이월드 지도는 이렇게 연 파일에서도 뜹니다. 문장에 수업용 인증키가 들어 있습니다.</div>
+<div class="prompt cond"><div class="bar"><span>막히면 · 배경지도를 브이월드로</span><button type="button" class="copy">복사</button></div><pre>배경지도가 안 떠. 배경지도를 브이월드(VWorld)로 바꿔 줘. 타일 주소는 https://api.vworld.kr/req/wmts/1.0.0/A9027E2D-F0E9-44F1-A390-7AF06D8F635E/Base/{z}/{y}/{x}.png 이고, 순서가 {z}/{y}/{x} 인 것에 주의해 줘.</pre></div>
+<p class="note">위성영상 배경을 원하면 주소의 <code>Base</code> 를 <code>Satellite</code> 로, <code>png</code> 를 <code>jpeg</code> 로 바꿉니다. 「이 지도를 로컬 서버로 열어 줘」라고 해도 풀립니다.</p>
 <p class="note">QGIS 가 깔려 있으면 <code>data</code> 폴더의 <code>post.tif</code> 와 <code>dnbr.tif</code> 를 QGIS 창에 끌어다 놓아 보세요. 에이전트가 만든 지도와 같은 자리에 같은 모양이 나오는지 겹쳐 보는 것이 공간자료의 검증입니다.</p>
 
 <h3><span class="n">B</span>노트북 심화 과제 · 더 해 보고 싶을 때</h3>
