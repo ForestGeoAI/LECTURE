@@ -80,8 +80,8 @@ footer{margin-top:3.2rem;padding-top:1rem;border-top:1px solid var(--line);font-
 <h2><span class="no">3</span>실습 자료 · 결과 내기</h2>
 <p class="note" style="margin:0 0 .8rem">실습 자료는 수업 전에 받아 <b>C:\workspace</b> 에 풀어 둡니다. 도전 B 누적경관 자료(275MB)는 따로 받습니다.</p>
 <div class="list">
-  <a href="https://drive.google.com/file/d/1qV7JBGnd33Mb_d5f3bgJzhEm-aqeznFT/view?usp=sharing" target="_blank" rel="noopener"><span class="k">실습 자료</span><span class="t"><b>충남대_1일차_실습자료.zip</b><small>실습01 야장 엑셀 3개 + 양식 · 실습02 수종특징.csv · 실습03 토지피복 타일 12장 + 코드표 + 조사지점 · 따라할_문장.txt · 약 23MB · 풀어서 C:\workspace 로</small></span><span class="go">⤓</span></a>
-  <a href="https://drive.google.com/file/d/1sHO-Ru7XRSgQvOEF0n6F_PmJ2LIWWiz9/view?usp=sharing" target="_blank" rel="noopener" id="lnk-viewshed"><span class="k">도전 B 자료</span><span class="t"><b>누적경관 자료 (dem · 벌채구역 · 조망점)</b><small>275MB · 받아서 C:\workspace\실습04 폴더에 풉니다 — 실습04 를 새 책상으로</small></span><span class="go">⤓</span></a>
+  <a href="https://drive.google.com/file/d/1FMWkCxlCUXcDQ4vhYxb35EB55cyTcOtX/view?usp=sharing" target="_blank" rel="noopener"><span class="k">실습 자료</span><span class="t"><b>충남대_1일차_실습자료.zip</b><small>실습01 야장 엑셀 3개 + 양식 · 실습02 수종특징.csv · 실습03 토지피복 타일 12장 + 코드표 + 조사지점 · 따라할_문장.txt · 약 23MB · 풀어서 C:\workspace 로</small></span><span class="go">⤓</span></a>
+  <a href="https://drive.google.com/file/d/14JmM-uS3XHVkJPVjRLu5cT0GfDGOvcnv/view?usp=sharing" target="_blank" rel="noopener" id="lnk-viewshed"><span class="k">도전 B 자료</span><span class="t"><b>누적경관 자료 (dem · 벌채구역 · 조망점)</b><small>275MB · 받아서 C:\workspace\실습04 폴더에 풉니다 — 실습04 를 새 책상으로</small></span><span class="go">⤓</span></a>
   <a class="main" href="https://tally.so/r/ped2LJ" target="_blank" rel="noopener" id="lnk-submit"><span class="k">결과 내기</span><span class="t"><b>실습 결과 내기 폼</b><small>이름 · 이메일 · 쓴 AI 에이전트 · 도전 A 조사지점지도.html(파일 또는 공유 주소) · 도전 B 누적경관 결과보고서.pdf(파일 또는 공유 주소) · 자유과제 결과 · 막힌 부분과 하고 싶은 말 · 낸 것은 강사만 봅니다</small></span><span class="go">↗</span></a>
 </div>
 
@@ -115,11 +115,11 @@ footer{margin-top:3.2rem;padding-top:1rem;border-top:1px solid var(--line);font-
 // 주소가 정해지면 아래 칸에 넣는다. 비어 있는 줄은 누를 수 없고 「주소는 수업 전에 올립니다」로 보인다
 var LINKS = {
   submit:   "https://tally.so/r/ped2LJ",                                                       // 1일차 결과 내기
-  viewshed: "https://drive.google.com/file/d/1sHO-Ru7XRSgQvOEF0n6F_PmJ2LIWWiz9/view?usp=sharing", // 1일차 도전 B 자료
+  viewshed: "https://drive.google.com/file/d/14JmM-uS3XHVkJPVjRLu5cT0GfDGOvcnv/view?usp=sharing", // 1일차 도전 B 자료
   homework: "https://claude.ai/artifact/Ph8z8TcpTxDqVApcnRFQZA",   // 2일차 숙제 검사 슬라이드
-  colab:    "https://colab.research.google.com/drive/1-KPt3mZXiCquSXMRSjlOXIt393JCJI0Y?usp=sharing",   // 2일차 실습 노트북 (Colab 공유 주소)
-  bundle2:  "",   // 2일차 실습 자료 zip
-  fallback: ""    // 2일차 백업 · 도전 자료 zip
+  colab:    "https://colab.research.google.com/github/ForestGeoAI/LECTURE/blob/main/day2/uiseong_wildfire_handson_cnu.ipynb",   // 2일차 실습 노트북 (Colab 공유 주소)
+  bundle2:  "https://forestgeoai.github.io/LECTURE/day2/%EC%B6%A9%EB%82%A8%EB%8C%80_2%EC%9D%BC%EC%B0%A8_%EC%8B%A4%EC%8A%B5%EC%9E%90%EB%A3%8C.zip",   // 2일차 실습 자료 zip (GitHub)
+  fallback: "https://drive.google.com/file/d/1F3iWDc4XcIktYUT1qPUY47tYYmrkL86J/view?usp=sharing"    // 2일차 백업 · 도전 자료 zip
 };
 var PENDING = { homework: "슬라이드는 수업 시간에 공개합니다", colab: "주소는 수업 전에 올립니다", bundle2: "주소는 수업 전에 올립니다", fallback: "주소는 수업 전에 올립니다" };
 
