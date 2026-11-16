@@ -91,6 +91,22 @@ code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em;background:v
 .legend{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.85rem;color:var(--sub);margin:.6rem 0 0}
 .legend i{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;margin-right:.3rem;vertical-align:-1px}
 footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.78rem;color:var(--sub);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.demo{border:1px solid var(--line);border-radius:12px;margin:.9rem 0 1rem}
+.demo-tabs{display:flex;align-items:center;flex-wrap:wrap;gap:.45rem;padding:.55rem .7rem;border-bottom:1px solid var(--line);background:var(--soft);border-radius:12px 12px 0 0}
+.demo-tabs .lbl{font-size:.8rem;color:var(--sub);font-weight:600;margin:0 .2rem 0 .3rem}
+.demo-tab{font:inherit;font-size:.88rem;font-weight:650;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:.35rem .9rem;cursor:pointer}
+.demo-tab small{font-size:.76rem;font-weight:500;opacity:.7;margin-left:.3rem}
+.demo-tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.demo-pane{padding:.85rem 1rem 1rem}
+.demo-pane[hidden],.demo-stage[hidden],.demo-stage iframe[hidden]{display:none}
+.demo-pane>p{font-size:.95rem;margin:0 0 .5rem}
+.demo-pane ol{margin:.4rem 0 .9rem 1.35rem;font-size:.93rem}
+.demo-pane li{margin:.3rem 0}
+.demo-pane li::marker{color:var(--sub);font-weight:600}
+.demo-open{display:inline-block;border:1px solid var(--ink);border-radius:999px;padding:.35rem 1rem;font-size:.88rem;font-weight:650;color:var(--ink)}
+.demo-open:hover{background:var(--ink);color:var(--bg)}
+.demo-stage{position:relative;left:50%;transform:translateX(-50%);width:min(1180px,calc(100vw - 32px));margin:0 0 1.2rem;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.demo-stage iframe{display:block;width:100%;height:min(82vh,900px);min-height:520px;border:0}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:.5rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:50}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -122,7 +138,7 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);font-si
   <p class="grp"><span class="k">단계 3</span><a href="#p-3">지수 계산 — NDVI · NBR · dNBR</a></p>
   <ol><li><a href="#s3_1"><span class="n">3-1</span>지수 지도</a></li><li><a href="#s3_2"><span class="n">3-2</span>피해 등급과 면적</a></li><li><a href="#s3_3"><span class="n">3-3</span>생각해 보기</a></li></ol>
   <p class="grp"><span class="k">단계 4</span><a href="#p-4">AI 학습 — 기준선 · MLP · U-Net</a></p>
-  <ol><li><a href="#s4_1"><span class="n">4-1</span>자료 받아 읽기</a></li><li><a href="#s4_2"><span class="n">4-2</span>피처와 정답</a></li><li><a href="#s4_3"><span class="n">4-3</span>기준선</a></li><li><a href="#s4_4"><span class="n">4-4</span>MLP</a></li><li><a href="#s4_5"><span class="n">4-5</span>U-Net</a></li></ol>
+  <ol><li><a href="#s4_1"><span class="n">4-1</span>자료 받아 읽기</a></li><li><a href="#s4_2"><span class="n">4-2</span>피처와 정답</a></li><li><a href="#s4_3"><span class="n">4-3</span>기준선</a></li><li><a href="#s4_demo"><span class="n">체험</span>모델 속 보기</a></li><li><a href="#s4_4"><span class="n">4-4</span>MLP</a></li><li><a href="#s4_5"><span class="n">4-5</span>U-Net</a></li></ol>
   <p class="grp"><span class="k">단계 5</span><a href="#p-5">검증 · 해석 — 강사 화면으로 함께</a></p>
   <ol><li><a href="#s5_1"><span class="n">5-1</span>결과 한눈에</a></li><li><a href="#s5_2"><span class="n">5-2</span>화점과 비교</a></li><li><a href="#s5_3"><span class="n">5-3</span>잔설이 만든 가짜 산불</a></li><li><a href="#s5_4"><span class="n">5-4</span>요약 · 결과 묶기</a></li></ol>
   <p class="grp"><a href="#x20">도전 과제 — 시간이 남으면 (숙제 아님)</a></p>
@@ -299,6 +315,24 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);font-si
 <p>AI 가 정말 필요한지 보려면 비교할 기준이 있어야 합니다. 가장 단순한 방법은 발화 후 NBR 에 문턱값 하나를 거는 것입니다.</p>
 <div class="check"><b>이렇게 보이면 성공</b><code>검증 영역 정확도</code> 가 <b>약 90%</b>. AI 가 넘어야 할 점수입니다.</div>
 
+<h3 id="s4_demo"><span class="n">체험</span>모델 속 들여다보기 — MLP · U-Net</h3>
+<p>학습 셀을 돌리기 전에, 두 모델이 안에서 무엇을 하는지 손으로 만져 봅니다. 이론 23 · 24쪽의 그림을 직접 움직여 보는 화면입니다.</p>
+<div class="demo">
+<div class="demo-tabs" role="tablist" aria-label="체험 고르기"><span class="lbl">체험 →</span><button type="button" class="demo-tab" role="tab" id="demo-tab-mlp" data-demo="mlp" aria-controls="demo-pane-mlp" aria-selected="true">MLP<small>이론 23쪽</small></button><button type="button" class="demo-tab" role="tab" id="demo-tab-unet" data-demo="unet" aria-controls="demo-pane-unet" aria-selected="false" tabindex="-1">U-Net<small>이론 24쪽</small></button></div>
+<div class="demo-pane" role="tabpanel" id="demo-pane-mlp" data-demo="mlp" aria-labelledby="demo-tab-mlp">
+<p><b>픽셀 하나가 피해 확률이 되기까지</b> — 픽셀 하나의 숫자 10개가 숨은 층 64 · 32 · 16 을 지나 0~1 사이의 확률 하나가 됩니다. 4-4 에서 돌릴 MLP 와 같은 구조입니다.</p>
+<ol><li><b>심한 피해</b>를 고른 뒤 B12 를 천천히 내려 보세요. 확률이 0.5 를 지나는 값이 있습니다.</li><li><b>임계값</b>을 0.2 와 0.8 로 바꿔 판정 지도를 비교해 보세요. 놓친 피해와 잘못 잡은 곳이 서로 반대로 움직입니다.</li><li><b>학습 과정 보기</b>를 누르면 무작위 가중치에서 시작해 600번 고쳐 가는 과정이 재생됩니다. 4-4 의 손실 그래프가 내려가는 동안 모델 안에서 일어나는 일입니다.</li></ol>
+<a class="demo-open" href="https://forestgeoai.github.io/LECTURE/demo/mlp.html" target="_blank" rel="noopener">MLP 체험 새 탭에서 열기 ↗</a>
+</div>
+<div class="demo-pane" role="tabpanel" id="demo-pane-unet" data-demo="unet" aria-labelledby="demo-tab-unet" hidden>
+<p><b>패치 하나가 피해 지도가 되기까지</b> — 64 × 64 조각을 통째로 받아 줄였다가 다시 키우며 같은 크기의 피해 확률 지도를 냅니다. 4-5 에서 돌릴 U-Net 을 작게 줄인 모양입니다.</p>
+<ol><li><b>스킵 연결 켜기</b>를 껐다 켜 보세요. 이론의 「건너뛰기 연결」입니다. 피해지 경계와 좁은 농경지 주변이 어떻게 달라지나요?</li><li><b>장면 전체</b>에서 U-Net 과 MLP 를 번갈아 보세요. MLP 지도에 점점이 흩어진 오판정이 U-Net 에서는 줄어듭니다.</li><li><b>피해지 붓</b>을 크기 1 로 골라 숲 한가운데에 점 하나를 찍어 보세요. MLP 는 그 칸을 바로 피해로 잡습니다. U-Net 은 어떻게 하나요?</li></ol>
+<a class="demo-open" href="https://forestgeoai.github.io/LECTURE/demo/unet.html" target="_blank" rel="noopener">U-Net 체험 새 탭에서 열기 ↗</a>
+</div>
+</div>
+<div class="demo-stage" id="demo-stage" hidden></div>
+<p class="note">체험 화면은 구조를 보여 주려고 만든 가상 장면과 시연용 모델입니다. 의성 영상이나 노트북의 모델이 아니므로 숫자는 서로 다릅니다.</p>
+
 <h3 id="s4_4"><span class="n">4-4</span>MLP — 6-5 · 6-6</h3>
 <p>픽셀 하나의 숫자 10개만 보고 판단하는 작은 신경망입니다. 30 에폭을 도는 데 1분이 채 안 걸립니다.</p>
 <div class="check"><b>이렇게 보이면 성공</b>5 에폭마다 한 줄씩 나오고, 마지막 검증 정확도가 <b>약 98%</b>. 손실 그래프는 내려가고 정확도 그래프는 올라갑니다.</div>
@@ -306,6 +340,7 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);font-si
 
 <h3 id="s4_5"><span class="n">4-5</span>U-Net — 6-7</h3>
 <p>64 × 64 조각을 통째로 보고 이웃 픽셀이 만드는 모양까지 배우는 모델입니다. GPU 면 6 에폭에 1분 안팎, CPU 면 2 에폭에 1~2분 걸립니다.</p>
+<p class="note">학습이 도는 동안 위의 <a href="#s4_demo" data-demo-go="unet">U-Net 체험</a>을 열어 보세요.</p>
 <div class="check"><b>이렇게 보이면 성공</b>에폭마다 한 줄씩 나오고, 마지막 검증 영역 정확도가 <b>97~99%</b>. 중간 에폭에서 점수가 출렁여도 마지막 값을 봅니다.</div>
 <p>내 숫자를 아래 표와 비교해 보세요. 조금 달라도 정상입니다.</p>
 <div class="tbl-wrap"><table class="tbl"><thead><tr><th>검증 영역</th><th>강의 자료 (Earth Engine · GPU)</th><th>백업 자료 (GEE 없이 · CPU)</th></tr></thead><tbody>
@@ -414,6 +449,27 @@ function setPath(p){
 document.querySelectorAll('.osbtn').forEach(function(b){ b.addEventListener('click', function(){ setPath(b.dataset.app); }); });
 var initial = 'gee'; try{ var s = localStorage.getItem('cnu-guide2-path'); if(s && document.querySelector('.osbtn[data-app="'+s+'"]')) initial = s; }catch(e){}
 setPath(initial);
+// 체험 탭 — 체험 페이지와 같은 곳(GitHub Pages)에서 열렸을 때만 화면 안에 펼친다. 그 밖에서는 새 탭 링크만 둔다
+(function(){
+  var DEMO = { mlp: { url: "https://forestgeoai.github.io/LECTURE/demo/mlp.html", title: "MLP 산불 피해 확률 체험" }, unet: { url: "https://forestgeoai.github.io/LECTURE/demo/unet.html", title: "U-Net 산불 피해 지도 체험" } };
+  var tabs = [].slice.call(document.querySelectorAll('.demo-tab')), panes = document.querySelectorAll('.demo-pane'), stage = document.getElementById('demo-stage');
+  var embed = false; try{ embed = location.hostname === new URL(DEMO.mlp.url).hostname; }catch(e){}
+  var frames = {};
+  function show(k, focus){
+    tabs.forEach(function(t){ var on = t.dataset.demo === k; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; if(on && focus) t.focus(); });
+    panes.forEach(function(p){ p.hidden = p.dataset.demo !== k; });
+    if(!embed) return;
+    stage.hidden = false;
+    if(!frames[k]){ var f = document.createElement('iframe'); f.src = DEMO[k].url; f.title = DEMO[k].title; f.loading = 'lazy'; stage.appendChild(f); frames[k] = f; }
+    Object.keys(frames).forEach(function(n){ frames[n].hidden = n !== k; });
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ show(t.dataset.demo); });
+    t.addEventListener('keydown', function(e){ if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){ e.preventDefault(); show(tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length].dataset.demo, true); } });
+  });
+  document.querySelectorAll('a[data-demo-go]').forEach(function(a){ a.addEventListener('click', function(){ show(a.dataset.demoGo); }); });
+  show('mlp');
+})();
 // 복사
 var toast = document.getElementById('toast'), tt;
 function showToast(msg){ toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove('show'); }, 1600); }
