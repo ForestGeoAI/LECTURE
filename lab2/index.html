@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>2일차 실습 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0a0a;--text:#3f3f46;--sub:#71717a;--line:#e4e4e7;--soft:#fafafa;--acc:#2563eb;--bg:#ffffff;--pre:#0a0a0a;--pre-line:#27272a;--pre-ink:#fafafa;--ok-bg:#f0fdf4;--ok-line:#bbf7d0;--ok-ink:#14532d;--ok-h:#15803d;--no-bg:#fef2f2;--no-line:#fecaca;--no-ink:#7f1d1d;--no-h:#b91c1c;--code-bg:#f4f4f5}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--ink:#fafafa;--text:#d4d4d8;--sub:#a1a1aa;--line:#2a2a2e;--soft:#18181b;--acc:#60a5fa;--bg:#0f0f11;--pre:#18181b;--pre-line:#3f3f46;--pre-ink:#fafafa;--ok-bg:#0f2a19;--ok-line:#1f5a34;--ok-ink:#bbf7d0;--ok-h:#4ade80;--no-bg:#2d1313;--no-line:#6b2222;--no-ink:#fecaca;--no-h:#f87171;--code-bg:#1f1f23} }
+:root[data-theme="dark"]{--ink:#fafafa;--text:#d4d4d8;--sub:#a1a1aa;--line:#2a2a2e;--soft:#18181b;--acc:#60a5fa;--bg:#0f0f11;--pre:#18181b;--pre-line:#3f3f46;--pre-ink:#fafafa;--ok-bg:#0f2a19;--ok-line:#1f5a34;--ok-ink:#bbf7d0;--ok-h:#4ade80;--no-bg:#2d1313;--no-line:#6b2222;--no-ink:#fecaca;--no-h:#f87171;--code-bg:#1f1f23}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;font-size:16px;scroll-behavior:smooth}
+body{font-family:"Pretendard Variable",Pretendard,"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;color:var(--text);background:var(--bg);max-width:46rem;margin:0 auto;padding:48px max(24px, env(safe-area-inset-right)) 96px max(24px, env(safe-area-inset-left));font-size:1rem;word-break:keep-all}
+a{color:var(--acc);text-decoration:none;font-weight:600}
+b,strong{color:var(--ink);font-weight:650}
+p{margin:.6rem 0}
+.doc-meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--sub);font-weight:500}
+h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.035em;font-weight:750;color:var(--ink);margin:1.6rem 0 1rem}
+.hot{display:block;border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:.95rem 1.1rem;font-size:.95rem;color:var(--text)}
+.hot .big{display:block;font-weight:650;color:var(--ink);margin-bottom:.15rem}
+.other{font-size:.875rem;color:var(--sub);margin:1rem 0 1.4rem}
+.osbar{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:1rem 0 0;position:sticky;top:env(safe-area-inset-top, 0px);background:var(--bg);padding:.6rem 0;z-index:5;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--bg)}
+.oshint{font-size:.8rem;color:var(--sub);font-weight:600;margin-right:.2rem}
+.osbtn{font:inherit;font-size:.88rem;font-weight:650;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:.35rem .9rem;cursor:pointer}
+.osbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.app{display:none;border:1px solid var(--line);border-radius:12px;margin:.8rem 0 1rem;overflow:hidden}
+html[data-app="gee"] .app[data-app="gee"],html[data-app="nogee"] .app[data-app="nogee"],html[data-app="all"] .app{display:block}
+.app>header{display:flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-bottom:1px solid var(--line);background:var(--soft);font-size:.9rem;font-weight:650;color:var(--ink)}
+.app>p,.app>ol,.app>ul{margin-left:1rem;margin-right:1rem}
+.app>ol,.app>ul{margin-left:2.3rem;font-size:.95rem}
+.app>ol li::marker{color:var(--sub);font-weight:600}
+.app>ol li{margin:.25rem 0}
+.app>:last-child{margin-bottom:.8rem}
+.app .check,.app .fail{margin:.6rem 1rem}
+.app>ol li code,.app>p code{white-space:normal}
+h3 .n{white-space:nowrap}
+.toc{margin:1.6rem 0 0;font-size:.9rem}
+.toc .tt{font-size:.75rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
+.toc ol{list-style:none;margin:0 0 .6rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.toc a{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--line);border-radius:8px;padding:.3rem .7rem;color:var(--text);font-weight:500}
+.toc a:hover{border-color:var(--ink);color:var(--ink)}
+.toc .n{font-size:.75rem;color:var(--sub);font-variant-numeric:tabular-nums}
+.toc .grp{display:flex;align-items:baseline;gap:.6rem;margin:.7rem 0 .35rem}
+.toc .grp .k{font-size:.72rem;font-weight:700;color:var(--acc)}
+.toc .grp a{border:0;padding:0;font-weight:700;color:var(--ink)}
+.sec{padding-top:3rem}
+h2{display:flex;align-items:baseline;gap:.7rem;font-size:1.4rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);padding-bottom:.7rem;margin-bottom:1rem;border-bottom:1px solid var(--line);scroll-margin-top:4rem}
+h2 .no{font-size:.85rem;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums}
+h3{display:flex;align-items:baseline;gap:.6rem;font-size:1.12rem;font-weight:700;color:var(--ink);margin:2rem 0 .7rem;scroll-margin-top:4rem}
+h3 .n{font-size:.78rem;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:6px;padding:.05rem .45rem}
+.lead{font-size:.95rem;color:var(--sub);margin:0 0 1rem}
+.lead b{color:var(--text)}
+.step{position:relative;padding:0 0 1.2rem 2.6rem}
+.step::before{content:"";position:absolute;left:.8rem;top:1.9rem;bottom:.2rem;width:1px;background:var(--line)}
+.step:last-of-type::before{display:none}
+.step-no{position:absolute;left:0;top:0;width:1.65rem;height:1.65rem;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:.8rem;font-weight:650;display:flex;align-items:center;justify-content:center}
+.step h4{font-size:1rem;font-weight:600;color:var(--ink);line-height:1.6;padding-top:.05rem}
+.step h4 b{font-weight:700}
+.step p{font-size:.92rem;color:var(--sub);margin:.25rem 0 0}
+.prompt{margin:.75rem 0;border-radius:10px;background:var(--pre);overflow:hidden}
+.prompt .bar{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.4rem .5rem .4rem .9rem;border-bottom:1px solid var(--pre-line);font-size:.75rem;color:#a1a1aa}
+.prompt .bar button{font:inherit;font-size:.78rem;font-weight:600;color:#fafafa;background:transparent;border:1px solid #3f3f46;border-radius:6px;padding:.2rem .7rem;cursor:pointer;white-space:nowrap}
+.prompt .bar button:hover{background:#27272a}
+.prompt .bar button.done{border-color:#22c55e;color:#4ade80}
+.prompt pre{font-family:inherit;font-size:.95rem;line-height:1.65;color:var(--pre-ink);padding:.85rem 1rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.prompt.cond .bar{color:#fdba74}
+.check,.fail{margin:.9rem 0;padding:.75rem 1rem;border-radius:10px;font-size:.9rem;border:1px solid}
+.check{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok-ink)}
+.fail{background:var(--no-bg);border-color:var(--no-line);color:var(--no-ink)}
+.check>b:first-child,.fail>b:first-child{display:block;font-size:.8rem;font-weight:650;margin-bottom:.1rem}
+.check>b:first-child{color:var(--ok-h)}.check>b:first-child::before{content:"✓  "}
+.fail>b:first-child{color:var(--no-h)}.fail>b:first-child::before{content:"!  "}
+.note{font-size:.88rem;color:var(--sub);border-left:2px solid var(--line);padding-left:.9rem;margin:.9rem 0}
+.tbl-wrap{border:1px solid var(--line);border-radius:12px;margin:.8rem 0 1.2rem;overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+table.tbl th{text-align:left;font-size:.75rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;background:var(--soft);padding:.55rem .9rem;border-bottom:1px solid var(--line)}
+table.tbl td{padding:.6rem .9rem;border-bottom:1px solid var(--line);vertical-align:top}
+table.tbl tr:last-child td{border-bottom:0}
+table.tbl td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em;background:var(--code-bg);border:1px solid var(--line);border-radius:5px;padding:.05rem .35rem;color:var(--ink);overflow-wrap:anywhere}
+.checklist{list-style:none;margin:.8rem 0;padding:0}
+.checklist li{border-bottom:1px solid var(--line);padding:.55rem 0;margin:0}
+.checklist label{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer}
+.checklist input{flex:none;width:1.15rem;height:1.15rem;margin-top:.3rem;accent-color:var(--ink)}
+.checklist input:checked+span{opacity:.5;text-decoration:line-through}
+.help{margin:1.4rem 0;font-size:.9rem;color:var(--sub);background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:.85rem 1rem}
+.legend{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.85rem;color:var(--sub);margin:.6rem 0 0}
+.legend i{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;margin-right:.3rem;vertical-align:-1px}
+footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.78rem;color:var(--sub);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:.5rem 1rem;border-radius:999px;font-size:.85rem;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="doc-meta"><span>충남대학교 산림자원학과 · AI 에이전트 특강 2일차</span><span>2026. 11. 17. 수업</span></div>
+<h1>2일차 실습 가이드 — 위성영상과 AI로 의성 산불 읽기</h1>
+<div class="hot"><span class="big">오늘은 2025년 의성 산불을 위성영상으로 직접 읽습니다. 발화 전 · 후 영상 두 장으로 피해 지도를 만들고, AI 에게는 발화 후 영상 한 장만 보여 주고 탄 곳을 찾게 합니다.</span>코드는 이미 다 적혀 있습니다. 셀을 위에서부터 차례로 실행하고, 나온 그림이 이론의 어느 장이었는지 떠올리면 됩니다. 문장과 값은 직접 치지 말고 <b>복사</b> 단추로 복사해 붙여 넣으세요.</div>
+<p class="other">본 실습은 <b>Google Colab</b> 에서 합니다. 설치할 것은 없고 구글 계정만 있으면 됩니다. Earth Engine 등록을 마쳤는지에 따라 길이 둘로 나뉘니 아래에서 내 길을 고르세요. 어느 길이든 같은 그림과 같은 AI 학습까지 갑니다. 자료와 링크는 → <a href="../" data-link="home">특강 홈</a></p>
+
+<div class="osbar" role="group" aria-label="내 길 고르기">
+  <span class="oshint">내 길 →</span>
+  <button type="button" class="osbtn" data-app="gee" aria-pressed="true">Earth Engine 으로</button>
+  <button type="button" class="osbtn" data-app="nogee" aria-pressed="false">GEE 없이 시작</button>
+  <button type="button" class="osbtn" data-app="all" aria-pressed="false">모두 보기</button>
+</div>
+
+<nav class="toc">
+  <p class="tt">차례</p>
+  <ol><li><a href="#x0">오늘 끝나면 남는 것</a></li><li><a href="#x1">이 가이드 보는 법</a></li><li><a href="#x31">막히면</a></li></ol>
+  <p class="grp"><span class="k">사전 준비</span><a href="#p-0">집에서 미리 — Earth Engine 등록</a></p>
+  <ol><li><a href="#s0_1"><span class="n">0-1</span>구글 계정</a></li><li><a href="#s0_2"><span class="n">0-2</span>Earth Engine 등록</a></li><li><a href="#s0_3"><span class="n">0-3</span>프로젝트 ID 메모</a></li><li><a href="#s0_4"><span class="n">0-4</span>실습 자료 풀기</a></li></ol>
+  <p class="grp"><span class="k">몸풀기</span><a href="#p-m">산불 통계를 에이전트에게</a></p>
+  <ol><li><a href="#sm_1"><span class="n">1</span>새 책상 — <code>실습05</code></a></li><li><a href="#sm_2"><span class="n">2</span>그래프 맡기기</a></li><li><a href="#sm_3"><span class="n">3</span>이유 찾기 · 출처</a></li><li><a href="#sm_4"><span class="n">4</span>출처와 대조</a></li></ol>
+  <p class="grp"><span class="k">단계 1</span><a href="#p-1">준비 — Colab · GPU · 연결</a></p>
+  <ol><li><a href="#s1_1"><span class="n">1-1</span>노트북 열고 사본 저장</a></li><li><a href="#s1_2"><span class="n">1-2</span>GPU 켜기</a></li><li><a href="#s1_3"><span class="n">1-3</span>설치와 글꼴</a></li><li><a href="#s1_4"><span class="n">1-4</span>스위치와 연결</a></li></ol>
+  <p class="grp"><span class="k">단계 2</span><a href="#p-2">영상 불러오기</a></p>
+  <ol><li><a href="#s2_1"><span class="n">2-1</span>영역 세 종류</a></li><li><a href="#s2_2"><span class="n">2-2</span>발화 전 · 후 영상</a></li><li><a href="#s2_3"><span class="n">2-3</span>눈으로 읽기</a></li></ol>
+  <p class="grp"><span class="k">단계 3</span><a href="#p-3">지수 계산 — NDVI · NBR · dNBR</a></p>
+  <ol><li><a href="#s3_1"><span class="n">3-1</span>지수 지도</a></li><li><a href="#s3_2"><span class="n">3-2</span>피해 등급과 면적</a></li><li><a href="#s3_3"><span class="n">3-3</span>생각해 보기</a></li></ol>
+  <p class="grp"><span class="k">단계 4</span><a href="#p-4">AI 학습 — 기준선 · MLP · U-Net</a></p>
+  <ol><li><a href="#s4_1"><span class="n">4-1</span>자료 받아 읽기</a></li><li><a href="#s4_2"><span class="n">4-2</span>피처와 정답</a></li><li><a href="#s4_3"><span class="n">4-3</span>기준선</a></li><li><a href="#s4_4"><span class="n">4-4</span>MLP</a></li><li><a href="#s4_5"><span class="n">4-5</span>U-Net</a></li></ol>
+  <p class="grp"><span class="k">단계 5</span><a href="#p-5">검증 · 해석 — 강사 화면으로 함께</a></p>
+  <ol><li><a href="#s5_1"><span class="n">5-1</span>결과 한눈에</a></li><li><a href="#s5_2"><span class="n">5-2</span>화점과 비교</a></li><li><a href="#s5_3"><span class="n">5-3</span>잔설이 만든 가짜 산불</a></li><li><a href="#s5_4"><span class="n">5-4</span>요약 · 결과 묶기</a></li></ol>
+  <p class="grp"><a href="#x20">도전 과제 — 시간이 남으면 (숙제 아님)</a></p>
+</nav>
+
+<section class="sec" id="x0"><h2><span class="t">오늘 끝나면 남는 것</span></h2>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>단계</th><th>어떤 일</th><th>남는 것</th></tr></thead><tbody>
+<tr><td>몸풀기</td><td>산불 통계 10년치를 에이전트에게 맡기기 (1일차 방식 그대로)</td><td><code>산불통계_그래프.png</code> · 피해가 가장 컸던 해의 이유 세 줄(출처 포함)</td></tr>
+<tr><td>단계 2</td><td>Sentinel-2 발화 전 · 후 영상 불러오기</td><td><code>01_rgb_pre_post.png</code> — 3월 14일과 4월 8일의 의성</td></tr>
+<tr><td>단계 3</td><td>NDVI · NBR · dNBR 계산, 피해 등급</td><td><code>02_ndvi.png</code> · <code>02_nbr_dnbr.png</code> · 등급별 피해 면적</td></tr>
+<tr><td>단계 4</td><td>dNBR 로 정답을 만들어 AI 학습</td><td><code>04_training.png</code> · 기준선 · MLP · U-Net 의 검증 정확도</td></tr>
+<tr><td>단계 5</td><td>결과를 믿어도 되는지 검증</td><td><code>05_comparison.png</code> · <code>08_snow_ai.png</code> · 요약 숫자</td></tr>
+<tr><td>끝</td><td>그림과 숫자를 한 파일로</td><td><code>의성산불_결과.zip</code> — 내 컴퓨터로 가져가는 오늘의 결과</td></tr>
+</tbody></table></div>
+<p>오늘 내용은 한 줄로 말할 수 있습니다. <b>위성은 숲을 숫자로 적고, AI 는 그 숫자에서 패턴을 배웁니다.</b> 그 결과를 믿어도 되는지는 내가 검증합니다.</p>
+</section>
+
+<section class="sec" id="x1"><h2><span class="t">이 가이드 보는 법</span></h2>
+<p><b>1. 노트북 화면을 반으로 나눕니다.</b> 왼쪽에는 Colab, 오른쪽에는 이 가이드를 띄웁니다. 창을 누르고 <b>윈도우 키 + ←</b> 또는 <b>→</b> 를 누르면 됩니다. (1일차와 같습니다)</p>
+<p><b>2. Colab 은 「셀」을 하나씩 실행합니다.</b> 코드 셀에 마우스를 올리면 왼쪽에 <b>▶</b> 단추가 나옵니다. 누르거나, 셀을 누른 뒤 <b>Shift + Enter</b> 를 누릅니다.</p>
+<div class="step"><span class="step-no">1</span><h4>실행 중에는 ▶ 자리에서 동그라미가 돕니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4>끝나면 셀 왼쪽에 초록 체크와 걸린 시간이 나오고, 셀 아래에 글자나 그림이 나옵니다.</h4></div>
+<div class="step"><span class="step-no">3</span><h4>앞 셀이 끝난 뒤에 다음 셀을 실행합니다. 건너뛰면 뒤 셀에서 오류가 납니다.</h4></div>
+<p><b>3. 코드는 고치지 않습니다.</b> 오늘 고치는 곳은 「★ 스위치」 셀 하나뿐입니다. 각 셀 위의 「코드 설명」을 읽고, 실행하고, 그림을 봅니다.</p>
+<p><b>4. 초록 상자가 「이렇게 보이면 성공」, 빨간 상자가 「막히면」 입니다.</b></p>
+<p><b>5. 위 「내 길」에서 길을 고르면</b> 길마다 다른 부분이 그 길 기준으로 바뀝니다. Earth Engine 등록을 마쳤으면 「Earth Engine 으로」, 못 했거나 연결이 막히면 「GEE 없이 시작」입니다. 수업 도중에 길을 바꿔도 됩니다.</p>
+<div class="legend"><span><i style="background:#0a0a0a"></i>붙여 넣을 문장 · 값</span><span><i style="background:#f97316"></i>조건 걸기 — 결과를 보고 한 마디 더</span><span><i style="background:#22c55e"></i>이렇게 보이면 성공</span><span><i style="background:#ef4444"></i>막히면</span></div>
+</section>
+
+<section class="sec" id="p-0"><h2><span class="no">사전 준비</span><span class="t">집에서 미리 — Earth Engine 등록</span></h2>
+<p class="lead">약 15분 · 위성영상을 구글 서버에서 계산해 주는 <b>Google Earth Engine</b> 을 내 계정으로 쓸 수 있게 등록하고, <b>프로젝트 ID</b> 를 메모해 옵니다. 학생 · 연구 용도는 무료이고 결제 정보를 넣지 않습니다.</p>
+
+<h3 id="s0_1"><span class="n">0-1</span>구글 계정</h3>
+<div class="step"><span class="step-no">1</span><h4>1일차에 쓴 <b>개인 구글 계정</b>(@gmail.com)을 그대로 씁니다.</h4><p>학교 · 기관 계정은 Cloud 프로젝트를 만들지 못하게 막혀 있는 경우가 있습니다.</p></div>
+<div class="step"><span class="step-no">2</span><h4>크롬에서 그 계정으로 로그인해 둡니다. 휴대폰을 옆에 둡니다.</h4><p>등록 중에 2단계 인증을 켜라는 안내가 나올 수 있습니다.</p></div>
+
+<h3 id="s0_2"><span class="n">0-2</span>Earth Engine 등록</h3>
+<div class="step"><span class="step-no">1</span><h4>아래 주소를 엽니다.</h4></div>
+<div class="prompt"><div class="bar"><span>사전 준비 0-2 · 등록 주소</span><button type="button" class="copy">복사</button></div><pre>https://console.cloud.google.com/earth-engine</pre></div>
+<div class="step"><span class="step-no">2</span><h4>Google Cloud 를 처음 쓰면 약관 화면이 나옵니다. 읽고 동의합니다.</h4></div>
+<div class="step"><span class="step-no">3</span><h4><b>프로젝트 만들기</b>(Create project)를 누르고 이름을 정합니다. 예: <code>cnu-geoai</code></h4><p>이미 만든 프로젝트가 있으면 그것을 골라도 됩니다.</p></div>
+<div class="step"><span class="step-no">4</span><h4>프로젝트 <b>등록</b>(Register)을 누르고 용도를 <b>비영리(Noncommercial)</b> 로 고릅니다.</h4><p>기관은 「충남대학교(Chungnam National University)」, 용도는 교육 · 연구로 적고, 나머지 질문은 사실대로 답합니다.</p></div>
+<div class="step"><span class="step-no">5</span><h4>등급은 <b>Community</b> 를 고릅니다. 무료이고 결제 계정이 필요 없습니다.</h4><p>Contributor 는 결제 계정을 연결해야 하므로 고르지 않습니다. 등급을 묻지 않고 넘어가면 Community 로 정해집니다.</p></div>
+<div class="step"><span class="step-no">6</span><h4><b>Earth Engine API 사용</b>(Enable) 단추가 보이면 누릅니다.</h4></div>
+<div class="check"><b>이렇게 보이면 성공</b>Earth Engine 구성(Configuration) 화면에 이 프로젝트가 비영리 용도로 등록되었다고 나옵니다.</div>
+<p class="note">화면의 문구와 순서는 조금 다를 수 있습니다. <b>비영리</b>와 <b>Community</b> 두 가지만 맞게 고르면 됩니다. 결제 정보를 넣으라는 화면이 나오면 넣지 말고 뒤로 가서 Community 를 다시 고릅니다.</p>
+
+<h3 id="s0_3"><span class="n">0-3</span>프로젝트 ID 메모</h3>
+<div class="step"><span class="step-no">1</span><h4>Cloud 콘솔 맨 위의 <b>프로젝트 이름</b>을 누릅니다. 프로젝트 목록이 뜹니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4>목록의 <b>ID</b> 칸에 적힌 값을 복사해 메모장이나 「나에게 보내기」에 붙여 둡니다.</h4><p>이름이 아니라 ID 입니다. 이름이 <code>cnu-geoai</code> 여도 ID 는 <code>cnu-geoai-471203</code> 처럼 숫자가 붙어 있을 수 있습니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>영문 소문자 · 숫자 · 하이픈으로 된 프로젝트 ID 한 줄이 메모에 있습니다.</div>
+
+<h3 id="s0_4"><span class="n">0-4</span>실습 자료 풀기</h3>
+<div class="step"><span class="step-no">1</span><h4><a href="../" data-link="bundle">특강 홈의 「2일차 실습 자료」</a> zip 을 받아 <b>C:\workspace</b> 에 풉니다. (맥: 홈 폴더 아래 workspace)</h4><p>1일차의 <code>실습01</code>~<code>실습04</code> 는 그대로 두고, <code>실습05</code> · <code>실습06</code> 폴더와 <code>따라할_문장_2일차.txt</code> 가 새로 생깁니다.</p></div>
+<div class="step"><span class="step-no">2</span><h4>1일차에 쓴 에이전트 앱(Antigravity 등)이 열리는지 한 번 확인합니다.</h4><p>몸풀기와 도전 과제에서 씁니다.</p></div>
+<div class="fail"><b>등록이 끝까지 안 되면</b>괜찮습니다. 수업에서는 「GEE 없이 시작」으로 같은 실습을 합니다. 어디에서 막혔는지만 기억해 오세요.</div>
+<ul class="checklist">
+<li><label><input type="checkbox" id="ck01"><span>개인 구글 계정으로 크롬에 로그인했다</span></label></li>
+<li><label><input type="checkbox" id="ck02"><span>Earth Engine 에 비영리 · Community 로 등록했다</span></label></li>
+<li><label><input type="checkbox" id="ck03"><span>프로젝트 ID 를 메모했다</span></label></li>
+<li><label><input type="checkbox" id="ck04"><span>2일차 실습 자료를 C:\workspace 에 풀었다</span></label></li>
+</ul>
+</section>
+
+<section class="sec" id="p-m"><h2><span class="no">몸풀기</span><span class="t">산불 통계를 에이전트에게</span></h2>
+<p class="lead">10분 · 에이전트 앱 · 1일차에 익힌 <b>맡겨 보기 → 조건 걸기 → 검증</b>을 산불 통계로 한 번 더 합니다. 산림청 산불통계 10년치(2015~2024, 연도별 발생건수와 피해면적)가 <code>실습05</code> 에 있습니다.</p>
+
+<h3 id="sm_1"><span class="n">몸풀기 1</span>새 책상 — <code>실습05</code></h3>
+<div class="step"><span class="step-no">1</span><h4>에이전트 앱에서 <code>C:\workspace\실습05</code> 를 새 프로젝트(새 책상)로 엽니다.</h4><p>1일차 실습 가이드 0-3 과 같은 방법입니다. 권한도 1일차처럼 「알아서」로 맞춥니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>왼쪽 목록에 「실습05」, 가운데에 빈 입력창.</div>
+
+<h3 id="sm_2"><span class="n">몸풀기 2</span>그래프 맡기기</h3>
+<div class="prompt"><div class="bar"><span>몸풀기 2 · 그래프 맡기기 (폴더: 실습05)</span><button type="button" class="copy">복사</button></div><pre>산불통계_2015_2024.csv 를 읽고, 연도별 산불 발생건수는 막대로, 피해면적은 꺾은선으로 한 장에 그려서 산불통계_그래프.png 로 저장해 줘. 피해면적이 가장 컸던 해와 10년 평균(건수 · 면적)도 알려 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b><code>산불통계_그래프.png</code> 가 생기고, 피해면적이 가장 컸던 해는 <b>2022년(24,797 ha)</b>, 10년 평균은 <b>545.5건 · 약 4,002 ha</b> 라고 답합니다.</div>
+
+<h3 id="sm_3"><span class="n">몸풀기 3</span>조건 걸기 — 이유를 찾고 출처 붙이기</h3>
+<p>에이전트는 인터넷도 찾아볼 수 있습니다(1일차 이론의 「도구」). 다만 그럴듯하게 지어낼 수도 있으니 출처를 조건으로 겁니다.</p>
+<div class="prompt cond"><div class="bar"><span>몸풀기 3 · 조건 걸기 — 이유 찾기</span><button type="button" class="copy">복사</button></div><pre>피해면적이 가장 컸던 해에 왜 그렇게 피해가 컸는지 인터넷에서 찾아서 세 줄로 정리해 줘. 문장마다 출처 주소를 붙이고, 확인하지 못한 내용은 지어내지 말고 「확인 필요」라고 적어 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b>세 줄 설명과 문장마다 출처 주소. 주소 하나를 직접 눌러 실제로 열리는지, 그 내용이 맞는지 확인합니다.</div>
+
+<h3 id="sm_4"><span class="n">몸풀기 4</span>검증 — 출처와 대조하기</h3>
+<div class="prompt cond"><div class="bar"><span>몸풀기 4 · 검증 — 출처와 대조</span><button type="button" class="copy">복사</button></div><pre>네가 계산한 10년 평균을 출처.txt 에 적힌 값과 비교해서 같은지 알려 줘. 다르면 어디가 왜 다른지도 알려 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b>출처.txt 의 「545.5건 · 4,001.9 ha」와 같다고 답합니다.</div>
+<p class="note">이 표에는 2025년이 없습니다. 2025년 의성 등 경북 산불의 피해면적은 99,289 ha(산림청 정밀조사)로, 위 10년 평균의 약 25배입니다. 오늘 본 실습에서는 이 산불을 위성으로 읽습니다.</p>
+</section>
+
+<section class="sec" id="p-1"><h2><span class="no">단계 1</span><span class="t">준비 — Colab · GPU · 연결</span></h2>
+<p class="lead">10분 · 노트북 섹션 1~2 · 노트북을 내 드라이브에 복사하고, GPU 를 켜고, 영상을 가져올 길을 정합니다.</p>
+
+<h3 id="s1_1"><span class="n">1-1</span>노트북 열고 사본 저장</h3>
+<div class="step"><span class="step-no">1</span><h4><a href="../" data-link="colab">특강 홈의 「실습 노트북」</a>을 누릅니다. Colab 에서 노트북이 열립니다.</h4><p>오른쪽 위 계정이 Earth Engine 에 등록한 그 구글 계정인지 봅니다.</p></div>
+<div class="step"><span class="step-no">2</span><h4>메뉴에서 <b>파일 → Drive에 사본 저장</b>을 누릅니다. 새 탭에 「…의 사본」이 열립니다.</h4><p>이제부터는 이 사본에서 실행합니다. 원본 탭은 닫아도 됩니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>노트북 제목이 「uiseong_wildfire_handson_cnu.ipynb의 사본」으로 바뀌었습니다.</div>
+<div class="fail"><b>링크가 안 열리면</b><code>colab.research.google.com</code> 을 열고 <b>파일 → 노트북 업로드</b>로, 실습 자료 zip 안의 <code>uiseong_wildfire_handson_cnu.ipynb</code> 를 올립니다.</div>
+
+<h3 id="s1_2"><span class="n">1-2</span>GPU 켜기</h3>
+<div class="step"><span class="step-no">1</span><h4>메뉴에서 <b>런타임 → 런타임 유형 변경</b>을 누릅니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4>하드웨어 가속기에서 <b>T4 GPU</b> 를 고르고 <b>저장</b>을 누릅니다.</h4><p>T4 GPU 를 고를 수 없으면 CPU 그대로 둡니다. 끝까지 되고, U-Net 학습만 짧게 줄어듭니다.</p></div>
+
+<h3 id="s1_3"><span class="n">1-3</span>설치와 글꼴 — 섹션 1</h3>
+<div class="step"><span class="step-no">1</span><h4>섹션 1 의 첫 코드 셀(패키지 설치)을 실행합니다. 1분쯤 걸립니다.</h4><p>「이 노트북은 Google 에서 작성하지 않았습니다」라는 경고가 뜨면 <b>무시하고 계속 실행</b>을 누릅니다.</p></div>
+<div class="step"><span class="step-no">2</span><h4>다음 셀(라이브러리 불러오기)을 실행합니다.</h4></div>
+<div class="check"><b>이렇게 보이면 성공</b>첫 셀 아래에 <code>설치 완료</code>, 둘째 셀 아래에 <code>장치: cuda</code>. (<code>장치: cpu</code> 여도 진행할 수 있습니다)</div>
+
+<h3 id="s1_4"><span class="n">1-4</span>스위치와 연결 — 섹션 2</h3>
+<p>「★ 스위치」 셀이 오늘 유일하게 고치는 곳입니다.</p>
+<div class="app" data-app="gee"><header>Earth Engine 으로</header><ol><li>스위치 셀 오른쪽의 <b>EE_PROJECT</b> 칸에 메모해 온 프로젝트 ID 를 붙여 넣습니다. <b>USE_GEE</b> 는 체크된 채로 둡니다.</li><li>스위치 셀을 실행합니다. <code>Earth Engine으로 진행합니다.</code> 가 나옵니다.</li><li>다음 셀(Earth Engine 연결)을 실행합니다. 창이 뜨면 등록한 구글 계정을 고르고, 권한 항목을 모두 체크한 뒤 <b>허용</b>(계속)을 누릅니다.</li><li>그다음 「[GEE 없이] 미리 잘라 둔 위성 자료 받기」 셀도 그냥 실행합니다. 아무 일 없이 넘어갑니다.</li></ol><div class="check"><b>이렇게 보이면 성공</b><code>연결 확인: 42</code></div><div class="fail"><b>「Earth Engine 연결 실패」가 나오면</b>프로젝트 ID 의 철자를 확인하고(이름이 아니라 ID), 스위치 셀부터 다시 실행합니다. 두 번 해도 안 되면 위에서 「GEE 없이 시작」으로 길을 바꿉니다.</div></div>
+<div class="app" data-app="nogee"><header>GEE 없이 시작</header><ol><li>스위치 셀 오른쪽의 <b>USE_GEE</b> 체크를 풉니다. EE_PROJECT 는 비워 둡니다.</li><li>스위치 셀을 실행합니다. <code>GEE 없이 시작합니다.</code> 가 나옵니다.</li><li>다음 셀(Earth Engine 연결)을 실행합니다. <code>건너뜁니다</code> 가 나옵니다.</li><li>「[GEE 없이] 미리 잘라 둔 위성 자료 받기」 셀을 실행합니다. 약 80MB 를 받아 풉니다. 1분쯤 걸립니다.</li></ol><div class="check"><b>이렇게 보이면 성공</b><code>자료 준비 완료: GeoTIFF 17개</code></div><div class="fail"><b>「파일 선택」 단추가 나오면</b>자동으로 받지 못한 것입니다. <a href="../" data-link="fallback">특강 홈의 「백업 · 도전 자료」</a>에서 <code>uiseong_fallback_data.zip</code> 을 내려받아 그 단추로 올립니다.</div></div>
+<p class="note">이제부터는 어느 길이든 <b>모든 셀을 위에서부터 차례로</b> 실행합니다. 첫 줄이 <code># [GEE]</code> 인 셀은 Earth Engine 길에서만, <code>[GEE 없이]</code> 인 셀은 백업 길에서만 일을 합니다. 내 길이 아닌 셀은 실행해도 한 줄만 나오고 넘어갑니다.</p>
+</section>
+
+<section class="sec" id="p-2"><h2><span class="no">단계 2</span><span class="t">영상 불러오기</span></h2>
+<p class="lead">15분 · 노트북 섹션 3~4 · Sentinel-2 위성이 발화 전(3월 14일)과 발화 후(4월 8일)에 찍은 영상을 한 장씩 만듭니다. 이론의 「Sentinel-2」 · 「정합」 장면입니다.</p>
+
+<h3 id="s2_1"><span class="n">2-1</span>영역 세 종류 — 섹션 3</h3>
+<p>상자가 세 종류 나옵니다. <b>파란 상자</b>는 피해지 전체(분석 영역), <b>노란 상자 4개</b>(A~D)는 AI 가 배우는 곳, <b>빨간 상자</b>는 다 배운 AI 를 채점하는 곳(검증 영역)입니다.</p>
+<div class="app" data-app="gee"><header>Earth Engine 으로</header><p>확대 · 이동이 되는 지도가 나옵니다. 배경은 구글 위성사진입니다. 오른쪽 위 레이어 단추로 상자를 켜고 끌 수 있습니다.</p></div>
+<div class="app" data-app="nogee"><header>GEE 없이 시작</header><p>「[GEE 없이] 영역 지도」 셀이 발화 후 영상 위에 상자를 그린 고정 그림을 보여 줍니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>파란 상자 하나 안에 빨간 상자 1개와 노란 상자 4개.</div>
+
+<h3 id="s2_2"><span class="n">2-2</span>발화 전 · 후 영상 — 섹션 4</h3>
+<div class="app" data-app="gee"><header>Earth Engine 으로</header><ol><li><b>촬영 지도</b> — 그날 위성이 지나간 범위와 시각이 나옵니다. 3월 14일은 장면 3개, 4월 8일은 장면 2개입니다.</li><li><b>영상 만들기</b> — 구름을 지우고, 겹친 장면을 합치고, 물을 지웁니다. 출력에 타일 이름 · 궤도 · 구름 비율과 <code>물로 가린 면적</code> 이 나옵니다.</li><li><b>합치기를 눈으로 보기</b> — 3월 14일 장면 3개와 합친 결과.</li><li><b>대화형 지도</b> — 레이어 단추로 발화 전 진색 · 발화 후 진색 · SWIR 합성을 번갈아 켜 봅니다.</li><li><b>고정 그림</b> — 발화 전 · 후 진색을 나란히.</li></ol></div>
+<div class="app" data-app="nogee"><header>GEE 없이 시작</header><ol><li><code># [GEE]</code> 셀 다섯 개는 실행하면 <code>건너뜁니다</code> 가 나옵니다. 셀 위의 설명(장면이 여러 개인 이유, SCL 로 구름 지우기)은 읽고 넘어갑니다.</li><li>「[GEE 없이] 발화 전 · 후 진색과 SWIR 합성」 셀을 실행합니다. 그림 3장이 나옵니다.</li></ol><p>준비된 자료는 같은 순서(구름 지우기 → 합치기 → 물 지우기)를 미리 해 둔 결과입니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>발화 후 영상 가운데에 동서로 길게 이어진 어두운 갈색 띠가 보입니다. 발화 전 영상에는 없습니다.</div>
+
+<h3 id="s2_3"><span class="n">2-3</span>눈으로 읽기</h3>
+<div class="step"><span class="step-no">1</span><h4><b>진색</b>(B4 · B3 · B2)은 사람 눈에 보이는 색입니다. 탄 곳이 어둡게 보이지만 그늘 · 맨땅과 헷갈립니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4><b>SWIR 합성</b>(B12 · B8 · B4)에서는 숲이 초록, 탄 곳이 갈색 · 붉은색으로 또렷하게 갈립니다.</h4><p>눈에 보이지 않는 근적외 · 단파적외가 탄 흔적을 드러냅니다. 이론의 「파장」 장면입니다.</p></div>
+<div class="step"><span class="step-no">3</span><h4>발화 전 영상의 <b>북동쪽 능선</b>을 봅니다. 하얀 것은 남은 눈(잔설)입니다. 단계 5 에서 다시 만납니다.</h4></div>
+</section>
+
+<section class="sec" id="p-3"><h2><span class="no">단계 3</span><span class="t">지수 계산 — NDVI · NBR · dNBR</span></h2>
+<p class="lead">20분 · 노트북 섹션 5 · 밴드 값을 빼고 나눠 <b>지수</b>를 만들고, 발화 전 · 후의 차이로 피해 지도를 그립니다. 이론의 「지수」 · 「dNBR」 장면입니다.</p>
+
+<h3 id="s3_1"><span class="n">3-1</span>지수 지도</h3>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>지수</th><th>식</th><th>읽는 법</th></tr></thead><tbody>
+<tr><td>NDVI</td><td>(B8 − B4) / (B8 + B4)</td><td>잎이 많고 건강할수록 큽니다</td></tr>
+<tr><td>NBR</td><td>(B8 − B12) / (B8 + B12)</td><td>타면 작아집니다 (음수까지)</td></tr>
+<tr><td>dNBR</td><td>발화 전 NBR − 발화 후 NBR</td><td>클수록 많이 탔습니다</td></tr>
+</tbody></table></div>
+<div class="app" data-app="gee"><header>Earth Engine 으로</header><p>「지수 계산과 피해 등급 지도」 셀을 실행합니다. 계산은 구글 서버가 하고, 색을 칠한 그림만 받아 옵니다. 30초쯤 걸립니다.</p></div>
+<div class="app" data-app="nogee"><header>GEE 없이 시작</header><p>「[GEE 없이] 같은 지수를 numpy로 계산한다」 셀을 실행합니다. 같은 식을 배열끼리 직접 빼고 나눕니다. 코드에서 <code>nd()</code> 와 <code>dnbr_roi = nbr_pre - nbr_post</code> 두 줄을 찾아보세요. 위 표의 식 그대로입니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>그림 두 묶음이 나옵니다. NDVI 발화 전 · 후(2장), 그리고 NBR 발화 전 · 후와 dNBR · 피해 등급(4장). dNBR 지도에 동서로 긴 붉은 띠가 보입니다.</div>
+
+<h3 id="s3_2"><span class="n">3-2</span>피해 등급과 면적</h3>
+<p>dNBR 을 USGS 기준 6개 구간으로 나눠 등급을 매기고, 등급별 면적을 셉니다.</p>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>dNBR</th><th>등급</th><th>참고 면적</th></tr></thead><tbody>
+<tr><td>0.1 ~ 0.27</td><td>경미</td><td>약 5만 3천~5만 6천 ha</td></tr>
+<tr><td>0.27 ~ 0.44</td><td>중간-낮음</td><td>약 2만 2천~2만 3천 ha</td></tr>
+<tr><td>0.44 ~ 0.66</td><td>중간-높음</td><td>약 1만 5천~1만 6천 ha</td></tr>
+<tr><td>0.66 초과</td><td>극심</td><td>약 1만 7천~1만 8천 ha</td></tr>
+</tbody></table></div>
+<div class="check"><b>이렇게 보이면 성공</b>등급 6개의 면적이 나오고, <code>중간 이상(dNBR&gt;0.27) 합계</code> 가 <b>5만 5천 ha 안팎</b>입니다. 길에 따라 숫자가 조금 다릅니다(격자 크기와 장면을 합치는 방식이 다릅니다).</div>
+
+<h3 id="s3_3"><span class="n">3-3</span>생각해 보기</h3>
+<div class="step"><span class="step-no">1</span><h4>산림청 공식 피해면적은 99,289 ha 입니다. 내 숫자에서 어느 등급부터 더해야 이 값에 가까워지나요?</h4><p>어느 등급부터 「피해」로 셀지는 사람이 정합니다.</p></div>
+<div class="step"><span class="step-no">2</span><h4>「경미」 등급에는 산불이 아닌 변화도 섞입니다. 무엇이 있을까요?</h4><p>계절 변화, 잔설, 논밭 갈이. dNBR 지도의 북동쪽에 산불 띠와 떨어진 붉은 얼룩이 있는지 찾아보세요.</p></div>
+</section>
+
+<section class="sec" id="p-4"><h2><span class="no">단계 4</span><span class="t">AI 학습 — 기준선 · MLP · U-Net</span></h2>
+<p class="lead">30분 · 노트북 섹션 6 · dNBR 로 정답(피해 1 / 정상 0)을 만들고, AI 에게는 <b>발화 후 영상 한 장</b>만 보여 줘 탄 곳을 맞히게 합니다. 이론의 「학습 · 검증 · 활용」과 34번 장면입니다.</p>
+
+<h3 id="s4_1"><span class="n">4-1</span>자료 받아 읽기 — 6-1</h3>
+<div class="app" data-app="gee"><header>Earth Engine 으로</header><p>「영상 내려받기」 셀이 검증 영역과 학습 상자 4개를 30 m 격자 GeoTIFF 11개로 받습니다. <b>2~3분</b> 걸립니다. <code>저장: /content/data/…</code> 가 11번 나오면 끝입니다.</p></div>
+<div class="app" data-app="nogee"><header>GEE 없이 시작</header><p>같은 격자로 잘라 둔 파일이 이미 있습니다. <code>준비된 파일 11개를 그대로 씁니다</code> 가 나오고 바로 넘어갑니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>다음 셀에서 <code>검증 영역: 595 × 749 픽셀</code>(한두 픽셀 달라도 됩니다)과 학습 상자 A~D 의 크기 · 피해 비율(약 40 · 22 · 10 · 5%)이 나옵니다.</div>
+
+<h3 id="s4_2"><span class="n">4-2</span>피처와 정답 — 6-2 · 6-3</h3>
+<div class="step"><span class="step-no">1</span><h4><b>피처</b> — AI 에게 픽셀 하나는 숫자 10개입니다. 밴드 6개와 지수 4개. 그림 10장으로 나옵니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4><b>정답</b> — dNBR 이 0.27 보다 크면 피해(1), −0.1 과 0.1 사이면 정상(0), 그 사이는 애매해서 뺍니다.</h4><p>발화 전 영상은 정답을 만들 때만 쓰고, AI 입력에는 넣지 않습니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b><code>학습 (상자 4개): … → 120,000개 (클래스 균형)</code> · <code>검증 영역 (학습에 안 씀): 약 36만 개</code></div>
+
+<h3 id="s4_3"><span class="n">4-3</span>기준선 — 6-4</h3>
+<p>AI 가 정말 필요한지 보려면 비교할 기준이 있어야 합니다. 가장 단순한 방법은 발화 후 NBR 에 문턱값 하나를 거는 것입니다.</p>
+<div class="check"><b>이렇게 보이면 성공</b><code>검증 영역 정확도</code> 가 <b>약 90%</b>. AI 가 넘어야 할 점수입니다.</div>
+
+<h3 id="s4_4"><span class="n">4-4</span>MLP — 6-5 · 6-6</h3>
+<p>픽셀 하나의 숫자 10개만 보고 판단하는 작은 신경망입니다. 30 에폭을 도는 데 1분이 채 안 걸립니다.</p>
+<div class="check"><b>이렇게 보이면 성공</b>5 에폭마다 한 줄씩 나오고, 마지막 검증 정확도가 <b>약 98%</b>. 손실 그래프는 내려가고 정확도 그래프는 올라갑니다.</div>
+<p class="note">학습 정확도가 검증 정확도보다 조금 낮게 나와도 정상입니다. 이유는 노트북의 코드 설명에 있습니다.</p>
+
+<h3 id="s4_5"><span class="n">4-5</span>U-Net — 6-7</h3>
+<p>64 × 64 조각을 통째로 보고 이웃 픽셀이 만드는 모양까지 배우는 모델입니다. GPU 면 6 에폭에 1분 안팎, CPU 면 2 에폭에 1~2분 걸립니다.</p>
+<div class="check"><b>이렇게 보이면 성공</b>에폭마다 한 줄씩 나오고, 마지막 검증 영역 정확도가 <b>97~99%</b>. 중간 에폭에서 점수가 출렁여도 마지막 값을 봅니다.</div>
+<p>내 숫자를 아래 표와 비교해 보세요. 조금 달라도 정상입니다.</p>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>검증 영역</th><th>강의 자료 (Earth Engine · GPU)</th><th>백업 자료 (GEE 없이 · CPU)</th></tr></thead><tbody>
+<tr><td>기준선 정확도</td><td>89.8%</td><td>90.2%</td></tr>
+<tr><td>MLP 정확도</td><td>98.4%</td><td>98.6%</td></tr>
+<tr><td>U-Net 정확도</td><td>98.6% (6 에폭)</td><td>97.2% (2 에폭)</td></tr>
+<tr><td>dNBR 피해 면적</td><td>13,679 ha</td><td>13,626 ha</td></tr>
+<tr><td>MLP 피해 면적</td><td>17,549 ha</td><td>17,557 ha</td></tr>
+</tbody></table></div>
+<div class="fail"><b>잊지 말 것</b>이 정확도는 「dNBR 을 얼마나 잘 흉내 냈나」의 점수입니다. 정답이 dNBR 에서 나왔기 때문입니다. 「산불을 잘 찾는다」는 뜻이 되려면 다른 자료로 확인해야 합니다. 단계 5 에서 합니다.</div>
+</section>
+
+<section class="sec" id="p-5"><h2><span class="no">단계 5</span><span class="t">검증 · 해석 — 강사 화면으로 함께</span></h2>
+<p class="lead">15분 · 노트북 섹션 7~8 · 셀은 각자 실행하되, 그림 읽기는 강사 화면으로 함께 합니다. 이론의 「잔설」 · 「체크리스트」 장면입니다.</p>
+
+<h3 id="s5_1"><span class="n">5-1</span>결과 한눈에 — 7-1</h3>
+<p>그림 6장이 나옵니다. 위 줄은 발화 전 · 후 진색과 dNBR 등급(정답이 나온 곳), 아래 줄은 기준선 · MLP · U-Net 입니다. 아래 줄 세 장은 모두 발화 후 영상 한 장만 보고 낸 결과입니다.</p>
+<div class="step"><span class="step-no">1</span><h4>MLP 지도와 U-Net 지도의 <b>모양</b>을 비교합니다. 어느 쪽이 점점이 튀고, 어느 쪽이 덩어리지고 매끈한가요?</h4><p>MLP 는 픽셀 하나만 보고, U-Net 은 이웃까지 봅니다.</p></div>
+<div class="step"><span class="step-no">2</span><h4>노란색(확률 0.5 근처)은 AI 가 확신하지 못한 곳입니다. 어디에 많은가요?</h4></div>
+
+<h3 id="s5_2"><span class="n">5-2</span>화점과 비교 — 7-2</h3>
+<p>NASA FIRMS 는 위성이 <b>불타는 순간의 열</b>을 잡은 기록입니다. 타고 난 뒤의 반사율 변화를 보는 dNBR 과 원리가 다른 독립 자료입니다.</p>
+<div class="app" data-app="gee"><header>Earth Engine 으로</header><p>화점을 받아, 각 방법이 「피해」로 판정한 곳 가운데 화점에서 1 km 안에 있는 비율을 잽니다. 대부분이 1 km 안이면 그 「피해」는 실제 불이 난 곳과 맞습니다.</p></div>
+<div class="app" data-app="nogee"><header>GEE 없이 시작</header><p>화점 자료는 Earth Engine 에서만 받습니다. 두 셀은 <code>건너뜁니다</code> 가 나옵니다. 이 부분은 강사 화면으로 함께 봅니다.</p></div>
+
+<h3 id="s5_3"><span class="n">5-3</span>잔설이 만든 가짜 산불 — 7-3 · 7-4</h3>
+<p>피해지 북쪽 산지에 하늘색 상자(잔설 상자)를 하나 잡습니다. 이번 산불이 오지 않은 곳입니다. 그런데 3월 14일에 있던 눈이 4월 8일에 녹으면서 NBR 이 떨어졌고, dNBR 은 그 자리를 「피해」로 잡습니다.</p>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>잔설 상자의 「피해」</th><th>강의 자료</th><th>백업 자료</th></tr></thead><tbody>
+<tr><td>dNBR (두 장)</td><td>1,306 ha</td><td>1,235 ha</td></tr>
+<tr><td>MLP (한 장)</td><td>153 ha</td><td>98 ha</td></tr>
+<tr><td>U-Net (한 장)</td><td>0 ha</td><td>0 ha</td></tr>
+<tr><td>FIRMS 화점</td><td>0 ha</td><td>(자료 없음)</td></tr>
+</tbody></table></div>
+<div class="check"><b>이렇게 보이면 성공</b>마지막 그림에서 dNBR 칸에는 붉은 얼룩이 있고, MLP 와 U-Net 칸은 거의 초록입니다. 발화 후 영상 한 장으로 배운 AI 는 눈에 속지 않았습니다. 이것이 오늘 AI 를 만든 이유입니다.</div>
+
+<h3 id="s5_4"><span class="n">5-4</span>요약 · 결과 묶기 — 섹션 8</h3>
+<div class="step"><span class="step-no">1</span><h4>섹션 8 의 요약 셀을 실행합니다. 오늘 계산한 숫자가 한 화면에 나옵니다.</h4></div>
+<div class="step"><span class="step-no">2</span><h4>「결과 묶어 내려받기」 셀을 실행합니다. 그림과 요약이 <code>의성산불_결과.zip</code> 으로 묶여 내 컴퓨터로 내려옵니다.</h4><p>내는 파일이 아니라 내가 가져가는 파일입니다. Colab 은 창을 닫으면 결과가 사라집니다. 브라우저가 내려받기를 막으면 허용을 누릅니다.</p></div>
+<div class="check"><b>이렇게 보이면 성공</b>내려받기 폴더에 <code>의성산불_결과.zip</code>. 안에 그림 10장 안팎과 <code>요약.txt</code>.</div>
+</section>
+
+<section class="sec" id="x20"><h2><span class="t">도전 과제 — 시간이 남으면</span></h2>
+<p class="lead">오늘은 <b>숙제가 없습니다.</b> 내는 것도 없습니다. 수업 중에 시간이 남거나, 끝난 뒤 혼자 더 해 보고 싶을 때 하는 과제입니다.</p>
+<h3><span class="n">A</span>위성영상을 에이전트에게 · 20분</h3>
+<p>오늘 노트북으로 한 일을 이번에는 에이전트에게 말로 시켜 봅니다. <a href="../" data-link="fallback">특강 홈의 「백업 · 도전 자료」</a>(약 81MB)를 받아 <code>C:\workspace\실습06</code> 폴더 안에 풉니다(<code>data</code> 폴더가 바로 보이게). 그리고 <code>실습06</code> 을 새 책상으로 엽니다.</p>
+<div class="prompt"><div class="bar"><span>도전 A-1 · dNBR 피해 등급 지도 (폴더: 실습06)</span><button type="button" class="copy">복사</button></div><pre>data 폴더의 자료_설명.txt 를 먼저 읽어 줘. 그다음 pre.tif(발화 전)와 post.tif(발화 후)로 dNBR 을 계산해서 피해 등급 지도를 만들고, 등급별 면적(ha) 표와 함께 result 폴더에 PNG 와 CSV 로 저장해 줘.</pre></div>
+<div class="prompt cond"><div class="bar"><span>도전 A-2 · 조건 걸기 — 검증</span><button type="button" class="copy">복사</button></div><pre>dNBR 이 0.27 보다 큰 면적이 몇 ha 인지 알려 주고, 자료_설명.txt 의 확인용 숫자와 비교해 줘. 값 없음(-9999)을 계산에서 뺐는지도 확인해 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b><code>result</code> 폴더에 피해 등급 지도 PNG 와 면적 CSV. dNBR &gt; 0.27 면적이 <b>약 13,600 ha</b> — 노트북 단계 4 의 「dNBR 피해 면적」과 같은 값입니다.</div>
+<div class="prompt"><div class="bar"><span>도전 A-3 · 웹지도로 만들기</span><button type="button" class="copy">복사</button></div><pre>방금 만든 피해 등급 지도를 배경지도 위에 반투명하게 겹친 웹지도로 만들어 줘. 등급 범례를 넣고, 의성산불_피해지도.html 하나로 저장해서 두 번 누르면 바로 열리게 해 줘.</pre></div>
+<div class="check"><b>이렇게 보이면 성공</b><code>의성산불_피해지도.html</code> 을 두 번 누르면 배경지도의 의성 · 안동 일대에 붉은 피해지가 겹쳐 보입니다. 확대해서 산 능선과 맞는지 봅니다.</div>
+<div class="fail"><b>배경지도가 회색이거나 「Access blocked」 가 보이면</b>인터넷 문제가 아닐 수 있습니다. 파일을 두 번 눌러 연 페이지(주소가 <code>file:///</code>)에는 무료 배경지도(OpenStreetMap) 서버가 지도를 보내 주지 않습니다. 에이전트에게 「배경지도가 안 떠. 다른 배경지도로 바꿔 줘」 또는 「이 지도를 로컬 서버로 열어 줘」라고 말합니다.</div>
+<p class="note">QGIS 가 깔려 있으면 <code>data</code> 폴더의 <code>post.tif</code> 와 <code>dnbr.tif</code> 를 QGIS 창에 끌어다 놓아 보세요. 에이전트가 만든 지도와 같은 자리에 같은 모양이 나오는지 겹쳐 보는 것이 공간자료의 검증입니다.</p>
+
+<h3><span class="n">B</span>노트북 심화 과제 · 더 해 보고 싶을 때</h3>
+<p>노트북 맨 끝에 심화 과제 7개가 있습니다. 값 하나만 바꿔 다시 실행하는 것부터 해 보세요.</p>
+<div class="step"><span class="step-no">1</span><h4><code>BURN_T</code> 를 0.27 에서 0.44 로 올리면 MLP 결과가 어떻게 달라지나요?</h4></div>
+<div class="step"><span class="step-no">2</span><h4>학습 상자를 A 하나만 남기면 검증 정확도가 어떻게 달라지나요? 피해가 거의 없는 C · D 만 쓰면?</h4></div>
+<div class="step"><span class="step-no">3</span><h4>MLP 입력을 가시광 세 밴드(B2 · B3 · B4)로 줄이면 정확도가 얼마나 떨어지나요?</h4><p>근적외 · 단파적외가 왜 필요한지 숫자로 확인할 수 있습니다. 힌트는 노트북 심화 과제 7번에 있습니다.</p></div>
+<p class="note">코드를 어떻게 고칠지 모르겠으면 Colab 의 Gemini 에게 물어봐도 됩니다. 「이 셀에서 학습 상자를 A 하나만 쓰도록 바꾸려면 어디를 고쳐야 해?」처럼 묻습니다. 1일차에 배운 대로, 고친 뒤 결과는 직접 확인합니다.</p>
+</section>
+
+<section class="sec" id="x31"><h2><span class="t">막히면</span></h2>
+<p>막히는 곳은 대부분 비슷합니다. 오류가 나면 빨간 글의 <b>맨 아래 줄</b>부터 읽습니다. 이 노트북은 무엇을 해야 하는지 그 줄에 적어 둡니다.</p>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>이럴 때</th><th>이렇게</th></tr></thead><tbody>
+<tr><td>EE_PROJECT 를 넣으라고 해요</td><td>스위치 셀의 EE_PROJECT 칸에 프로젝트 ID 를 넣고 그 셀부터 다시 실행합니다 (1-4)</td></tr>
+<tr><td>Earth Engine 연결 실패</td><td>프로젝트 ID 철자(이름이 아니라 ID), 그 프로젝트의 등록 여부를 확인합니다. 바로 안 풀리면 「GEE 없이 시작」으로 바꿉니다</td></tr>
+<tr><td>인증 창이 안 떠요</td><td>주소창 오른쪽의 팝업 차단 표시를 눌러 허용하고 그 셀을 다시 실행합니다</td></tr>
+<tr><td>NameError 가 나와요</td><td>위쪽 셀을 건너뛴 것입니다. <b>런타임 → 이전 셀 실행</b>(Ctrl + F8)을 누른 뒤 그 셀을 다시 실행합니다</td></tr>
+<tr><td>자료를 자동으로 못 받았대요</td><td>특강 홈의 「백업 · 도전 자료」 zip 을 내려받아 「파일 선택」 단추로 올립니다 (1-4)</td></tr>
+<tr><td>그래프 한글이 □ 로 깨져요</td><td>섹션 1 의 두 셀을 다시 실행합니다</td></tr>
+<tr><td>장치가 cpu 로 나와요</td><td>런타임 → 런타임 유형 변경 → T4 GPU. 바꾸면 처음부터 다시 실행해야 합니다. CPU 로도 끝까지 됩니다</td></tr>
+<tr><td>지도가 회색이거나 비어 있어요</td><td>뒤 계산에는 영향이 없습니다. 넘어갑니다</td></tr>
+<tr><td>Too Many Requests · Quota</td><td>1~2분 기다렸다가 그 셀만 다시 실행합니다</td></tr>
+<tr><td>런타임 연결이 끊겼어요</td><td>다시 연결하고 <b>런타임 → 모두 실행</b>으로 처음부터 다시 돌립니다. 받아 둔 파일은 사라집니다</td></tr>
+<tr><td>오류 글이 무슨 뜻인지 모르겠어요</td><td>오류 아래에 「오류 설명」 단추가 보이면 눌러 봅니다. Colab 의 Gemini 가 뜻을 풀어 줍니다</td></tr>
+<tr><td>결과 zip 이 안 내려와요</td><td>왼쪽 폴더 아이콘 → <code>의성산불_결과.zip</code> 옆 점 세 개 → 다운로드</td></tr>
+</tbody></table></div>
+<div class="help">그래도 막히면 <b>손을 들어 주세요</b>. 옆 사람 화면을 같이 봐도 됩니다. 에이전트 앱에서 막히는 경우는 <code>따라할_문장_2일차.txt</code> 맨 아래와 1일차 실습 가이드의 「막히면」에 있습니다.</div>
+</section>
+
+<footer><span>충남대학교 산림자원학과 특강 · 이상혁 · 한국환경연구원(KEI) · 실습 노트북 원자료: 김은빈(경희대)</span><span>forestgeoai@gmail.com</span></footer>
+<div class="toast" id="toast">복사했습니다</div>
+
+<script>
+// 주소가 정해지면 아래 칸에 넣는다. 비어 있으면 그 링크는 특강 홈으로 간다
+var LINKS = { home: "../", colab: "https://colab.research.google.com/drive/1-KPt3mZXiCquSXMRSjlOXIt393JCJI0Y?usp=sharing", bundle: "", fallback: "" };
+
+(function(){
+  var m = location.hostname.match(/^([^.]+)\.github\.io$/), repo = location.pathname.split('/')[1] || '';
+  if(!LINKS.bundle) LINKS.bundle = '../day2/' + encodeURIComponent('충남대_2일차_실습자료.zip');
+  if(!LINKS.colab && m && repo && repo !== 'lab1' && repo !== 'lab2') LINKS.colab = 'https://colab.research.google.com/github/' + m[1] + '/' + repo + '/blob/main/day2/uiseong_wildfire_handson_cnu.ipynb';
+})();
+document.querySelectorAll('a[data-link]').forEach(function(a){
+  var u = LINKS[a.dataset.link] || LINKS.home;
+  a.href = u;
+  if(LINKS[a.dataset.link] && a.dataset.link !== 'home'){ a.target = '_blank'; a.rel = 'noopener'; }
+});
+// 내 길 고르기
+function setPath(p){
+  document.documentElement.setAttribute('data-app', p);
+  document.querySelectorAll('.osbtn').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.app===p ? 'true' : 'false'); });
+  try{ localStorage.setItem('cnu-guide2-path', p); }catch(e){}
+}
+document.querySelectorAll('.osbtn').forEach(function(b){ b.addEventListener('click', function(){ setPath(b.dataset.app); }); });
+var initial = 'gee'; try{ var s = localStorage.getItem('cnu-guide2-path'); if(s && document.querySelector('.osbtn[data-app="'+s+'"]')) initial = s; }catch(e){}
+setPath(initial);
+// 복사
+var toast = document.getElementById('toast'), tt;
+function showToast(msg){ toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove('show'); }, 1600); }
+function fallbackCopy(text){ var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select(); var ok=false; try{ ok = document.execCommand('copy'); }catch(e){} document.body.removeChild(ta); return ok; }
+document.querySelectorAll('.copy').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = btn.closest('.prompt').querySelector('pre').textContent.trim();
+    function done(ok){ if(ok){ btn.textContent='복사됨 ✓'; btn.classList.add('done'); showToast('복사했습니다 — 입력창에 Ctrl+V'); setTimeout(function(){ btn.textContent='복사'; btn.classList.remove('done'); }, 1800); } else { showToast('복사가 안 되면 문장을 드래그해서 Ctrl+C'); } }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(fallbackCopy(text)); }); } else { done(fallbackCopy(text)); }
+  });
+});
+</script>
+</body>
+</html>
